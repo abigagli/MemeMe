@@ -46,6 +46,7 @@ class MemeEditorViewController: UIViewController {
     @IBOutlet weak var actionButton: UIBarButtonItem!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
+    @IBOutlet weak var toolbar: UIToolbar!
     
     
     //MARK: Actions
@@ -67,28 +68,30 @@ class MemeEditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.observer = self
-        topTextField.delegate = self
-        bottomTextField.delegate = self
+        
+        topTextField.text = "TOP"
+        bottomTextField.text = "BOTTOM"
         
         let memeTextAttributes = [
             NSStrokeColorAttributeName : UIColor.blackColor(),
             NSForegroundColorAttributeName : UIColor.whiteColor(),
             NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSStrokeWidthAttributeName : 3.0
+            NSStrokeWidthAttributeName : -3.0
         ]
         
         topTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.defaultTextAttributes = memeTextAttributes
         
-        topTextField.text = "TOP"
-        bottomTextField.text = "BOTTOM"
+        topTextField.delegate = self
+        bottomTextField.delegate = self
+        
         
         topTextField.textAlignment = .Center
         bottomTextField.textAlignment = .Center
         
         topTextField.sizeToFit()
         bottomTextField.sizeToFit()
-        
+
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -107,8 +110,8 @@ class MemeEditorViewController: UIViewController {
     }
 
 
-    //MARK: Business logic
-    func subscribeToKeyboardNotifications() {
+    //MARK: Notifications
+    private func subscribeToKeyboardNotifications() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
@@ -127,9 +130,40 @@ class MemeEditorViewController: UIViewController {
         }
     }
     
-    func unsubscribeFromKeyboardNotifications() {
+    private func unsubscribeFromKeyboardNotifications() {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    //MARK: Business logic
+    private func saveMeme() {
+        let memedImage = memeizeImage(imageView.image!)
+        var meme = Meme(topText: topTextField.text, bottomText: bottomTextField.text, originalImage: imageView.image!, memedImage: memedImage)
+        
+    }
+    
+    private func memeizeImage(image: UIImage) -> UIImage {
+        
+        hideBars()
+        
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
+        let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        showBars()
+        
+        return memedImage
+    }
+    
+    private func hideBars() {
+        UIApplication.sharedApplication().statusBarHidden = true
+        navigationController?.navigationBar.hidden = true
+        toolbar.hidden = true
+    }
+    private func showBars() {
+        UIApplication.sharedApplication().statusBarHidden = false
+        navigationController?.navigationBar.hidden = false
+        toolbar.hidden = false
     }
 }
 
@@ -177,7 +211,7 @@ extension MemeEditorViewController: UINavigationControllerDelegate, UIImagePicke
 {
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         imageView.image = image
-        
+        saveMeme()
         dismissViewControllerAnimated(true, completion: nil)
     }
     

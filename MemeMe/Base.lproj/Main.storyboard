@@ -81,6 +81,7 @@
                         <outlet property="bottomTextField" destination="QZ3-x5-DKR" id="7ky-eN-9MG"/>
                         <outlet property="cameraButton" destination="2Mm-pn-At6" id="hqf-W5-EXU"/>
                         <outlet property="imageView" destination="NLk-fa-hm6" id="5Qd-z0-ON4"/>
+                        <outlet property="toolbar" destination="0sO-S2-cAs" id="wep-4b-sHt"/>
                         <outlet property="topTextField" destination="Xkd-Rr-d21" id="P1a-5R-4zJ"/>
                     </connections>
                 </viewController>
