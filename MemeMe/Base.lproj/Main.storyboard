@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hdN-E6-Mnf">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -38,8 +38,8 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="YaO-am-9Vl"/>
                                 </items>
                             </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NLk-fa-hm6">
-                                <rect key="frame" x="0.0" y="28" width="600" height="528"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NLk-fa-hm6" customClass="observableUIImageView" customModule="MemeMe" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                         </subviews>
@@ -49,6 +49,7 @@
                             <constraint firstItem="0sO-S2-cAs" firstAttribute="top" secondItem="NLk-fa-hm6" secondAttribute="bottom" id="9wa-Wq-nOO"/>
                             <constraint firstItem="NLk-fa-hm6" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" symbolic="YES" id="F8E-RV-hXx"/>
                             <constraint firstItem="NLk-fa-hm6" firstAttribute="top" secondItem="0sO-S2-cAs" secondAttribute="top" id="Nl2-Ts-EbH"/>
+                            <constraint firstItem="NLk-fa-hm6" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="PuW-7M-s2Y"/>
                             <constraint firstItem="0sO-S2-cAs" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="gtR-oX-iWT"/>
                             <constraint firstItem="NLk-fa-hm6" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="iP3-qu-ozO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0sO-S2-cAs" secondAttribute="trailing" constant="-16" id="k9q-5A-Rxq"/>
@@ -56,17 +57,42 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="F8E-RV-hXx"/>
                                 <exclude reference="Nl2-Ts-EbH"/>
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="8b1-Fe-mKm">
+                        <barButtonItem key="leftBarButtonItem" enabled="NO" systemItem="action" id="ewK-QK-lSx"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="Teh-SQ-xUC"/>
+                    </navigationItem>
                     <connections>
+                        <outlet property="actionButton" destination="ewK-QK-lSx" id="xUQ-ti-c6s"/>
                         <outlet property="cameraButton" destination="2Mm-pn-At6" id="hqf-W5-EXU"/>
                         <outlet property="imageView" destination="NLk-fa-hm6" id="5Qd-z0-ON4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1199" y="614"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="v7n-hC-VNO">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hdN-E6-Mnf" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Li2-Oa-Ckt">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="wKU-Zj-OL4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rnt-Tc-i0f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="388" y="1275"/>
         </scene>
     </scenes>
 </document>

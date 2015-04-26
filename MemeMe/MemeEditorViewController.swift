@@ -8,13 +8,36 @@
 
 import UIKit
 
+protocol observableUIImageViewDelegate
+{
+    func imageDidSet(image: UIImage?)
+}
+class observableUIImageView : UIImageView
+{
+    override var image : UIImage? {
+        get {
+            return super.image
+        }
+        
+        set {
+            super.image = newValue
+            observer?.imageDidSet(image)
+        }
+            
+    }
+    var observer : observableUIImageViewDelegate?
+}
+
+
 class MemeEditorViewController: UIViewController {
 
     @IBOutlet weak var cameraButton: UIBarButtonItem!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageView: observableUIImageView!
+    @IBOutlet weak var actionButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        imageView.observer = self
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -44,8 +67,19 @@ class MemeEditorViewController: UIViewController {
 
 }
 
+extension MemeEditorViewController: observableUIImageViewDelegate
+{
+    func imageDidSet(image: UIImage?) {
+        if (image != nil) {
+            self.navigationItem.leftBarButtonItem!.enabled = true
+        }
+        else {
+            self.navigationItem.leftBarButtonItem!.enabled = false
+        }
+    }
+}
 
-extension MemeEditorViewController : UINavigationControllerDelegate, UIImagePickerControllerDelegate
+extension MemeEditorViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate
 {
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         imageView.image = image
@@ -53,4 +87,10 @@ extension MemeEditorViewController : UINavigationControllerDelegate, UIImagePick
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    /* Enable this if you want to remove previously picked image every time you cancel out of pickerViewController
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        imageView.image = nil
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    */
 }
