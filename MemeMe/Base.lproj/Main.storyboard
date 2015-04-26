@@ -59,8 +59,6 @@
                         <constraints>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="0sO-S2-cAs" secondAttribute="bottom" id="4cy-yT-YVX"/>
                             <constraint firstItem="0sO-S2-cAs" firstAttribute="top" secondItem="NLk-fa-hm6" secondAttribute="bottom" id="9wa-Wq-nOO"/>
-                            <constraint firstItem="NLk-fa-hm6" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" symbolic="YES" id="F8E-RV-hXx"/>
-                            <constraint firstItem="NLk-fa-hm6" firstAttribute="top" secondItem="0sO-S2-cAs" secondAttribute="top" id="Nl2-Ts-EbH"/>
                             <constraint firstItem="QZ3-x5-DKR" firstAttribute="top" secondItem="NLk-fa-hm6" secondAttribute="bottom" constant="-60" id="OCz-Fe-9pD"/>
                             <constraint firstItem="NLk-fa-hm6" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="PuW-7M-s2Y"/>
                             <constraint firstItem="0sO-S2-cAs" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="gtR-oX-iWT"/>
@@ -71,12 +69,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="NLk-fa-hm6" secondAttribute="trailing" constant="-16" id="wQp-RE-L0C"/>
                             <constraint firstItem="0sO-S2-cAs" firstAttribute="centerX" secondItem="Xkd-Rr-d21" secondAttribute="centerX" id="z0A-nl-cXu"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="F8E-RV-hXx"/>
-                                <exclude reference="Nl2-Ts-EbH"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="8b1-Fe-mKm">
                         <barButtonItem key="leftBarButtonItem" enabled="NO" systemItem="action" id="ewK-QK-lSx"/>
