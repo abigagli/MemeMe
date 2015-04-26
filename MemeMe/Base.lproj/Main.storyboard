@@ -42,14 +42,14 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xkd-Rr-d21">
-                                <rect key="frame" x="296" y="107" width="9" height="17"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xkd-Rr-d21" userLabel="TopTextField">
+                                <rect key="frame" x="16" y="107" width="568" height="17"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QZ3-x5-DKR">
-                                <rect key="frame" x="296" y="496" width="9" height="17"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QZ3-x5-DKR" userLabel="BottomTextField">
+                                <rect key="frame" x="16" y="496" width="568" height="17"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
@@ -57,17 +57,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="QZ3-x5-DKR" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="1xu-fb-Qld"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="0sO-S2-cAs" secondAttribute="bottom" id="4cy-yT-YVX"/>
                             <constraint firstItem="0sO-S2-cAs" firstAttribute="top" secondItem="NLk-fa-hm6" secondAttribute="bottom" id="9wa-Wq-nOO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QZ3-x5-DKR" secondAttribute="trailing" id="GIW-Vz-HMc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="0sO-S2-cAs" secondAttribute="trailing" constant="-16" id="KjS-BU-nAp"/>
                             <constraint firstItem="QZ3-x5-DKR" firstAttribute="top" secondItem="NLk-fa-hm6" secondAttribute="bottom" constant="-60" id="OCz-Fe-9pD"/>
                             <constraint firstItem="NLk-fa-hm6" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="PuW-7M-s2Y"/>
-                            <constraint firstItem="0sO-S2-cAs" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="gtR-oX-iWT"/>
+                            <constraint firstItem="Xkd-Rr-d21" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="cWy-VT-FvT"/>
                             <constraint firstItem="NLk-fa-hm6" firstAttribute="top" secondItem="Xkd-Rr-d21" secondAttribute="bottom" constant="-60" id="ha1-rP-cUo"/>
                             <constraint firstItem="NLk-fa-hm6" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="iP3-qu-ozO"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="0sO-S2-cAs" secondAttribute="trailing" constant="-16" id="k9q-5A-Rxq"/>
-                            <constraint firstItem="0sO-S2-cAs" firstAttribute="centerX" secondItem="QZ3-x5-DKR" secondAttribute="centerX" id="nrT-7z-RPI"/>
+                            <constraint firstItem="0sO-S2-cAs" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="m1r-t7-x2L"/>
+                            <constraint firstItem="Xkd-Rr-d21" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="mx5-Fg-pXp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="NLk-fa-hm6" secondAttribute="trailing" constant="-16" id="wQp-RE-L0C"/>
-                            <constraint firstItem="0sO-S2-cAs" firstAttribute="centerX" secondItem="Xkd-Rr-d21" secondAttribute="centerX" id="z0A-nl-cXu"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="8b1-Fe-mKm">
