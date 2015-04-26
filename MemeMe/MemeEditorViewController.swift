@@ -42,10 +42,7 @@ class MemeEditorViewController: UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
-            cameraButton.enabled = true
-        }
+        cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
