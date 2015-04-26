@@ -30,38 +30,25 @@ class ObservableUIImageView : UIImageView
 
 
 class MemeEditorViewController: UIViewController {
-
+    
+    //MARK: State
+    private enum WhichField {
+        case none
+        case top
+        case bottom
+    }
+    
+    private var fieldBeingEdited : WhichField = .none
+    
+    //MARK: Outlets 
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var imageView: ObservableUIImageView!
     @IBOutlet weak var actionButton: UIBarButtonItem!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        imageView.observer = self
-        topTextField.delegate = self
-        bottomTextField.delegate = self
-        
-        topTextField.text = "TOP"
-        bottomTextField.text = "BOTTOM"
-        
-        topTextField.textAlignment = .Center
-        bottomTextField.textAlignment = .Center
-        
-        topTextField.sizeToFit()
-        bottomTextField.sizeToFit()
-    }
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+    
+    //MARK: Actions
     @IBAction func chooseImage(sender: UIBarButtonItem) {
         var pickerViewController = UIImagePickerController()
         if sender.title != nil {
@@ -75,21 +62,100 @@ class MemeEditorViewController: UIViewController {
         presentViewController (pickerViewController, animated: true, completion: nil)
     }
 
+    
+    //MARK: Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        imageView.observer = self
+        topTextField.delegate = self
+        bottomTextField.delegate = self
+        
+        let memeTextAttributes = [
+            NSStrokeColorAttributeName : UIColor.blackColor(),
+            NSForegroundColorAttributeName : UIColor.whiteColor(),
+            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSStrokeWidthAttributeName : 3.0
+        ]
+        
+        topTextField.defaultTextAttributes = memeTextAttributes
+        bottomTextField.defaultTextAttributes = memeTextAttributes
+        
+        topTextField.text = "TOP"
+        bottomTextField.text = "BOTTOM"
+        
+        topTextField.textAlignment = .Center
+        bottomTextField.textAlignment = .Center
+        
+        topTextField.sizeToFit()
+        bottomTextField.sizeToFit()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
+        subscribeToKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        unsubscribeFromKeyboardNotifications()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+
+    //MARK: Business logic
+    func subscribeToKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func keyboardWillShow (notification: NSNotification) {
+        if fieldBeingEdited == .bottom {
+            let keyboardSize = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+            view.frame.origin.y -= keyboardSize.CGRectValue().height
+        }
+    }
+    
+    func keyboardWillHide (notification: NSNotification) {
+        if fieldBeingEdited == .bottom {
+            let keyboardSize = notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+            view.frame.origin.y += keyboardSize.CGRectValue().height
+        }
+    }
+    
+    func unsubscribeFromKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
 }
 
 extension MemeEditorViewController: UITextFieldDelegate
 {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField.text.isEmpty {
+            textField.text = textField == topTextField ? "TOP" : "BOTTOM"
+        }
         textField.resignFirstResponder()
+        fieldBeingEdited = .none
         return true
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        if textField == topTextField && textField.text == "TOP" {
-            textField.text = ""
+        if textField == topTextField {
+            fieldBeingEdited = .top
+            if textField.text == "TOP" {
+                textField.text = ""
+            }
         }
-        else if textField == bottomTextField && textField.text == "BOTTOM" {
+        else if textField == bottomTextField {
+            fieldBeingEdited = .bottom
+            if textField.text == "BOTTOM" {
             textField.text = ""
+            }
         }
         
     }
