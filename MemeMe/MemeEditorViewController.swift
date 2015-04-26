@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol observableUIImageViewDelegate
+protocol ObservableUIImageViewDelegate
 {
     func imageDidSet(image: UIImage?)
 }
-class observableUIImageView : UIImageView
+class ObservableUIImageView : UIImageView
 {
     override var image : UIImage? {
         get {
@@ -25,19 +25,32 @@ class observableUIImageView : UIImageView
         }
             
     }
-    var observer : observableUIImageViewDelegate?
+    var observer : ObservableUIImageViewDelegate?
 }
 
 
 class MemeEditorViewController: UIViewController {
 
     @IBOutlet weak var cameraButton: UIBarButtonItem!
-    @IBOutlet weak var imageView: observableUIImageView!
+    @IBOutlet weak var imageView: ObservableUIImageView!
     @IBOutlet weak var actionButton: UIBarButtonItem!
+    @IBOutlet weak var topTextField: UITextField!
+    @IBOutlet weak var bottomTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.observer = self
+        topTextField.delegate = self
+        bottomTextField.delegate = self
+        
+        topTextField.text = "TOP"
+        bottomTextField.text = "BOTTOM"
+        
+        topTextField.textAlignment = .Center
+        bottomTextField.textAlignment = .Center
+        
+        topTextField.sizeToFit()
+        bottomTextField.sizeToFit()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -64,7 +77,25 @@ class MemeEditorViewController: UIViewController {
 
 }
 
-extension MemeEditorViewController: observableUIImageViewDelegate
+extension MemeEditorViewController: UITextFieldDelegate
+{
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        if textField == topTextField && textField.text == "TOP" {
+            textField.text = ""
+        }
+        else if textField == bottomTextField && textField.text == "BOTTOM" {
+            textField.text = ""
+        }
+        
+    }
+}
+
+extension MemeEditorViewController: ObservableUIImageViewDelegate
 {
     func imageDidSet(image: UIImage?) {
         if (image != nil) {
