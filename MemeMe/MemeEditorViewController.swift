@@ -29,6 +29,28 @@ class MemeEditorViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func chooseImage(sender: UIBarButtonItem) {
+        var pickerViewController = UIImagePickerController()
+        if sender.title != nil {
+            pickerViewController.sourceType = .PhotoLibrary
+        }
+        else {
+             pickerViewController.sourceType = .Camera
+        }
+        
+        pickerViewController.delegate = self
+        presentViewController (pickerViewController, animated: true, completion: nil)
+    }
 
 }
 
+
+extension MemeEditorViewController : UINavigationControllerDelegate, UIImagePickerControllerDelegate
+{
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        imageView.image = image
+        
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+}

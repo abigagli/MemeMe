@@ -24,9 +24,17 @@
                                 </constraints>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="QqT-ze-wmz"/>
-                                    <barButtonItem enabled="NO" systemItem="camera" id="2Mm-pn-At6"/>
+                                    <barButtonItem enabled="NO" systemItem="camera" id="2Mm-pn-At6">
+                                        <connections>
+                                            <action selector="chooseImage:" destination="vXZ-lx-hvc" id="Pfe-88-ZY3"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="K1C-rH-4Gi"/>
-                                    <barButtonItem title="Album" id="Chh-7m-4TC"/>
+                                    <barButtonItem title="Album" id="Chh-7m-4TC">
+                                        <connections>
+                                            <action selector="chooseImage:" destination="vXZ-lx-hvc" id="Cue-yO-aYB"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="YaO-am-9Vl"/>
                                 </items>
                             </toolbar>
