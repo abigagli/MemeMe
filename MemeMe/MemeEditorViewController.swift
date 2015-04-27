@@ -74,7 +74,6 @@ class MemeEditorViewController: UIViewController {
     func activityCompletedHandler (activity: String!,  completed: Bool, returnedItems: [AnyObject]!, activityError: NSError!) -> Void {
         
         if completed && activityError == nil {
-            println ("SAVING")
             saveMemedImage()
             memedImage = nil
         }
@@ -165,8 +164,11 @@ class MemeEditorViewController: UIViewController {
     
     //MARK: Business logic
     private func saveMemedImage() {
+        println ("SAVING")
+        
         var meme = Meme(topText: topTextField.text, bottomText: bottomTextField.text, originalImage: imageView.image!, memedImage: self.memedImage!)
         
+        (UIApplication.sharedApplication().delegate as! AppDelegate).savedMemes.append(meme)
     }
     
     private func memeizeImage(image: UIImage) -> UIImage {
