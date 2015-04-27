@@ -33,7 +33,8 @@ class MemeEditorViewController: UIViewController {
         case bottom
     }
     
-    private var fieldBeingEdited : WhichField = .none
+    private var fieldBeingEdited: WhichField = .none
+    private var memedImage: UIImage?
     
     //MARK: Outlets 
     @IBOutlet weak var cameraButton: UIBarButtonItem!
@@ -42,6 +43,7 @@ class MemeEditorViewController: UIViewController {
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var toolbar: UIToolbar!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     
     //MARK: Actions
@@ -58,6 +60,36 @@ class MemeEditorViewController: UIViewController {
         presentViewController (pickerViewController, animated: true, completion: nil)
     }
 
+    @IBAction func shareMeme(sender: UIBarButtonItem) {
+        memedImage = memeizeImage(imageView.image!)
+        
+        let activityViewController = UIActivityViewController(activityItems: [memedImage!], applicationActivities: nil)
+        activityViewController.completionWithItemsHandler = activityCompletedHandler
+        presentViewController(activityViewController, animated: true, completion: nil)
+    }
+    @IBAction func cancelMemeEditing(sender: UIBarButtonItem) {
+        stopTextEditing()
+    }
+    
+    func activityCompletedHandler (activity: String!,  completed: Bool, returnedItems: [AnyObject]!, activityError: NSError!) -> Void {
+        
+        if completed && activityError == nil {
+            println ("SAVING")
+            saveMemedImage()
+            memedImage = nil
+        }
+    }
+    
+    private func stopTextEditing () {
+        switch fieldBeingEdited {
+        case .top :
+            topTextField.resignFirstResponder()
+        case .bottom :
+            bottomTextField.resignFirstResponder()
+        default :
+           break
+        }
+    }
     
     //MARK: Lifecycle
     override func viewDidLoad() {
@@ -92,6 +124,7 @@ class MemeEditorViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
+        updateUI()
         subscribeToKeyboardNotifications()
     }
     
@@ -131,9 +164,8 @@ class MemeEditorViewController: UIViewController {
     }
     
     //MARK: Business logic
-    private func saveMeme() {
-        let memedImage = memeizeImage(imageView.image!)
-        var meme = Meme(topText: topTextField.text, bottomText: bottomTextField.text, originalImage: imageView.image!, memedImage: memedImage)
+    private func saveMemedImage() {
+        var meme = Meme(topText: topTextField.text, bottomText: bottomTextField.text, originalImage: imageView.image!, memedImage: self.memedImage!)
         
     }
     
@@ -160,6 +192,21 @@ class MemeEditorViewController: UIViewController {
         navigationController?.navigationBar.hidden = false
         toolbar.hidden = false
     }
+    
+    private func numSharedMemes() -> Int {
+        return 0
+    }
+    
+    private func updateUI() {
+        if (imageView.image != nil) {
+            navigationItem.leftBarButtonItem!.enabled = true
+        }
+        else {
+            navigationItem.leftBarButtonItem!.enabled = false
+        }
+
+        navigationItem.rightBarButtonItem!.enabled = numSharedMemes() > 0
+    }
 }
 
 extension MemeEditorViewController: UITextFieldDelegate
@@ -170,6 +217,7 @@ extension MemeEditorViewController: UITextFieldDelegate
         }
         textField.resignFirstResponder()
         fieldBeingEdited = .none
+        updateUI()
         return true
     }
     
@@ -187,18 +235,15 @@ extension MemeEditorViewController: UITextFieldDelegate
             }
         }
         
+        //Prevent sharing while editing text fields
+        navigationItem.leftBarButtonItem!.enabled = false
     }
 }
 
 extension MemeEditorViewController: ObservableUIImageViewDelegate
 {
-    func imageDidSet(image: UIImage?) {
-        if (image != nil) {
-            self.navigationItem.leftBarButtonItem!.enabled = true
-        }
-        else {
-            self.navigationItem.leftBarButtonItem!.enabled = false
-        }
+    func imageDidSet(_: UIImage?) {
+        updateUI()
     }
 }
 
@@ -206,7 +251,6 @@ extension MemeEditorViewController: UINavigationControllerDelegate, UIImagePicke
 {
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         imageView.image = image
-        saveMeme()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
