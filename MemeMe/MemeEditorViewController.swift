@@ -15,12 +15,7 @@ protocol ObservableUIImageViewDelegate
 class ObservableUIImageView : UIImageView
 {
     override var image : UIImage? {
-        get {
-            return super.image
-        }
-        
-        set {
-            super.image = newValue
+        didSet {
             observer?.imageDidSet(image)
         }
             
