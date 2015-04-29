@@ -68,9 +68,11 @@ class MemeEditorViewController: UIViewController {
         presentViewController(activityViewController, animated: true, completion: nil)
     }
     @IBAction func cancelMemeEditing(sender: UIBarButtonItem) {
-        //FIXME: remove this?
-        stopTextEditing()
+        //FIXME: remove this
         memedImage = memeizeImage(imageView.image!)
+        
+        
+        
         saveMemedImage()
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -168,8 +170,6 @@ class MemeEditorViewController: UIViewController {
     
     //MARK: Business logic
     private func saveMemedImage() {
-        println ("SAVING")
-        
         var meme = Meme(topText: topTextField.text, bottomText: bottomTextField.text, originalImage: imageView.image!, memedImage: self.memedImage!)
         
         (UIApplication.sharedApplication().delegate as! AppDelegate).savedMemes.append(meme)
