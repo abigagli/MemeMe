@@ -12,6 +12,7 @@ class SentMemeTableViewController: UIViewController {
     
     var savedMemes: [Meme]!
 
+    @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,14 +26,20 @@ class SentMemeTableViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
         savedMemes = appDelegate.savedMemes
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         
         if savedMemes.count == 0 {
-            
-            let memeEditorNav = storyboard?.instantiateViewControllerWithIdentifier("MemeEditorNav") as! UINavigationController
-            presentViewController(memeEditorNav, animated: false, completion: nil)
+            self.tabBarController!.performSegueWithIdentifier("SegueToMemeEditor", sender: self)
+        }
+        else {
+            tableView.reloadData()
         }
     }
 
@@ -46,4 +53,34 @@ class SentMemeTableViewController: UIViewController {
     }
     */
 
+}
+
+extension SentMemeTableViewController : UITableViewDataSource, UITableViewDelegate
+{
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return savedMemes.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("SavedMemeTableViewCell") as! UITableViewCell
+        let meme = savedMemes[indexPath.row]
+        
+        // Set the name and image
+        cell.textLabel?.text = meme.topText
+        cell.detailTextLabel?.text = meme.bottomText
+        cell.imageView?.image = meme.originalImage
+        
+        return cell
+    }
+    
+    /*
+
+func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+
+let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("VillainDetailViewController")! as! VillainDetailViewController
+detailController.villain = self.allVillains[indexPath.row]
+self.navigationController!.pushViewController(detailController, animated: true)
+
+}
+*/
 }

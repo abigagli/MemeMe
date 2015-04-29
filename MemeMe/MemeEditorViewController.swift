@@ -68,14 +68,18 @@ class MemeEditorViewController: UIViewController {
         presentViewController(activityViewController, animated: true, completion: nil)
     }
     @IBAction func cancelMemeEditing(sender: UIBarButtonItem) {
+        //FIXME: remove this?
         stopTextEditing()
+        memedImage = memeizeImage(imageView.image!)
+        saveMemedImage()
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func activityCompletedHandler (activity: String!,  completed: Bool, returnedItems: [AnyObject]!, activityError: NSError!) -> Void {
         
         if completed && activityError == nil {
             saveMemedImage()
-            memedImage = nil
+            dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
@@ -195,19 +199,10 @@ class MemeEditorViewController: UIViewController {
         toolbar.hidden = false
     }
     
-    private func numSharedMemes() -> Int {
-        return 0
-    }
     
     private func updateUI() {
-        if (imageView.image != nil) {
-            navigationItem.leftBarButtonItem!.enabled = true
-        }
-        else {
-            navigationItem.leftBarButtonItem!.enabled = false
-        }
-
-        navigationItem.rightBarButtonItem!.enabled = numSharedMemes() > 0
+        navigationItem.leftBarButtonItem!.enabled = imageView.image != nil
+        navigationItem.rightBarButtonItem!.enabled = (imageView.image != nil) || ((UIApplication.sharedApplication().delegate as! AppDelegate).savedMemes.count > 0)
     }
 }
 

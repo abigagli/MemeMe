@@ -78,7 +78,7 @@
                                 <action selector="shareMeme:" destination="vXZ-lx-hvc" id="Sqd-ef-sbd"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="cancel" id="Teh-SQ-xUC">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="Teh-SQ-xUC">
                             <connections>
                                 <action selector="cancelMemeEditing:" destination="vXZ-lx-hvc" id="ble-me-j5l"/>
                             </connections>
@@ -96,7 +96,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1415" y="168"/>
+            <point key="canvasLocation" x="3429" y="1914"/>
         </scene>
         <!--Sent Memes CollectionView Nav-->
         <scene sceneID="1vd-nN-IYD">
@@ -151,7 +151,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="gFz-Hn-A8L">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ewl-Dj-AVj"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ewl-Dj-AVj">
+                            <connections>
+                                <segue destination="hdN-E6-Mnf" kind="presentation" id="4Sd-s0-SSf"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZuC-eb-hyY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -173,7 +177,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x50-Zr-BL0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1592" y="1378"/>
+            <point key="canvasLocation" x="1498" y="804"/>
         </scene>
         <!--Sent Meme Table View Controller-->
         <scene sceneID="AgQ-Ac-R7e">
@@ -190,17 +194,50 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="74b-be-9IV">
                                 <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SavedMemeTableViewCell" textLabel="olw-RG-o8x" detailTextLabel="gle-VH-rPJ" style="IBUITableViewCellStyleValue1" id="KRN-bV-Jfr">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KRN-bV-Jfr" id="l0v-Su-pNa">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="olw-RG-o8x">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gle-VH-rPJ">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="jBb-1D-ajC" id="TaM-bc-cGB"/>
+                                    <outlet property="delegate" destination="jBb-1D-ajC" id="6Q8-0P-YR4"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="gFO-ta-Jw2">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="djL-ee-b7V"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="djL-ee-b7V">
+                            <connections>
+                                <segue destination="hdN-E6-Mnf" kind="presentation" id="Voy-f9-OfT"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="74b-be-9IV" id="Wji-Rm-Keb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wTi-Hq-Hvp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2382" y="1374"/>
+            <point key="canvasLocation" x="2358" y="836"/>
         </scene>
         <!--Sent Memes Tab Controller-->
         <scene sceneID="Yuy-1D-EKr">
@@ -215,6 +252,7 @@
                     <connections>
                         <segue destination="9UX-Zi-oyj" kind="relationship" relationship="viewControllers" id="4p6-jy-h8t"/>
                         <segue destination="S2X-o0-JIb" kind="relationship" relationship="viewControllers" id="SZF-cu-YLd"/>
+                        <segue destination="hdN-E6-Mnf" kind="presentation" identifier="SegueToMemeEditor" id="2b2-0T-XxW"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jfl-gN-zKq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -237,11 +275,14 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rnt-Tc-i0f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="604" y="829"/>
+            <point key="canvasLocation" x="3404" y="973"/>
         </scene>
     </scenes>
     <resources>
         <image name="collection_icon" width="30" height="30"/>
         <image name="table_icon" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Voy-f9-OfT"/>
+    </inferredMetricsTieBreakers>
 </document>
