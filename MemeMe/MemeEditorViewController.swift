@@ -35,6 +35,8 @@ class MemeEditorViewController: UIViewController {
     
     private var fieldBeingEdited: WhichField = .none
     private var memedImage: UIImage?
+    private var previousTopText: String?
+    private var previousBottomText: String?
     
     //MARK: Outlets 
     @IBOutlet weak var cameraButton: UIBarButtonItem!
@@ -68,41 +70,34 @@ class MemeEditorViewController: UIViewController {
         presentViewController(activityViewController, animated: true, completion: nil)
     }
     @IBAction func cancelMemeEditing(sender: UIBarButtonItem) {
-        //FIXME: remove this
-        memedImage = memeizeImage(imageView.image!)
+        //FIXME: Just for debugging
+        //memedImage = memeizeImage(imageView.image!)
+        //saveMemedImage()
+        /////////////////////////
         
         
-        
-        saveMemedImage()
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func activityCompletedHandler (activity: String!,  completed: Bool, returnedItems: [AnyObject]!, activityError: NSError!) -> Void {
-        
-        if completed && activityError == nil {
-            saveMemedImage()
-            dismissViewControllerAnimated(true, completion: nil)
+        if numSavedMemes() > 0 {
+            //Dismiss ourselves and return to the sentmemesVC
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        else if fieldBeingEdited == .none {
+            let nextController = UIAlertController(title: "MemeEditor", message: "I'd really like to see a meme", preferredStyle: .Alert)
+            let okAction = UIAlertAction(title:"Ok, let's meme from scratch!", style: .Default) {action in self.cleanSlate()}
+            nextController.addAction(okAction)
+            presentViewController(nextController, animated: true, completion: nil)
+        }
+        else {
+            resetTextEditing()
         }
     }
     
-    private func stopTextEditing () {
-        switch fieldBeingEdited {
-        case .top :
-            topTextField.resignFirstResponder()
-        case .bottom :
-            bottomTextField.resignFirstResponder()
-        default :
-           break
-        }
-    }
     
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.observer = self
         
-        topTextField.text = "TOP"
-        bottomTextField.text = "BOTTOM"
+        cleanSlate()
         
         let memeTextAttributes = [
             NSStrokeColorAttributeName : UIColor.blackColor(),
@@ -169,6 +164,40 @@ class MemeEditorViewController: UIViewController {
     }
     
     //MARK: Business logic
+    func activityCompletedHandler (activity: String!,  completed: Bool, returnedItems: [AnyObject]!, activityError: NSError!) -> Void {
+        
+        if completed && activityError == nil {
+            saveMemedImage()
+            dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
+    private func cleanSlate() {
+        imageView.image = nil
+        previousTopText = "TOP"
+        previousBottomText = "BOTTOM"
+        resetTextEditing()
+    }
+    
+    
+    private func resetTextEditing () {
+        switch fieldBeingEdited {
+        case .top :
+            topTextField.resignFirstResponder()
+        case .bottom :
+            bottomTextField.resignFirstResponder()
+        default :
+           break
+        }
+        topTextField.text = previousTopText
+        bottomTextField.text = previousBottomText
+        fieldBeingEdited = .none
+    }
+    
+    private func numSavedMemes() -> Int {
+        return (UIApplication.sharedApplication().delegate as! AppDelegate).savedMemes.count
+    }
+    
     private func saveMemedImage() {
         var meme = Meme(topText: topTextField.text, bottomText: bottomTextField.text, originalImage: imageView.image!, memedImage: self.memedImage!)
         
@@ -202,16 +231,26 @@ class MemeEditorViewController: UIViewController {
     
     private func updateUI() {
         navigationItem.leftBarButtonItem!.enabled = imageView.image != nil
-        navigationItem.rightBarButtonItem!.enabled = (imageView.image != nil) || ((UIApplication.sharedApplication().delegate as! AppDelegate).savedMemes.count > 0)
+        //navigationItem.rightBarButtonItem!.enabled = (imageView.image != nil) || (numSavedMemes() > 0)
     }
 }
 
 extension MemeEditorViewController: UITextFieldDelegate
 {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if textField.text.isEmpty {
-            textField.text = textField == topTextField ? "TOP" : "BOTTOM"
+        if textField == topTextField {
+            if textField.text.isEmpty {
+                textField.text =  "TOP"
+            }
+            previousTopText = textField.text
         }
+        if textField == bottomTextField {
+            if textField.text.isEmpty {
+                textField.text =  "BOTTOM"
+            }
+            previousBottomText = textField.text
+        }
+        
         textField.resignFirstResponder()
         fieldBeingEdited = .none
         updateUI()
@@ -221,12 +260,14 @@ extension MemeEditorViewController: UITextFieldDelegate
     func textFieldDidBeginEditing(textField: UITextField) {
         if textField == topTextField {
             fieldBeingEdited = .top
+            previousTopText = textField.text
             if textField.text == "TOP" {
                 textField.text = ""
             }
         }
         else if textField == bottomTextField {
             fieldBeingEdited = .bottom
+            previousBottomText = textField.text
             if textField.text == "BOTTOM" {
             textField.text = ""
             }
@@ -248,6 +289,7 @@ extension MemeEditorViewController: UINavigationControllerDelegate, UIImagePicke
 {
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         imageView.image = image
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
     
