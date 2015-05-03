@@ -200,8 +200,9 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KRN-bV-Jfr" id="l0v-Su-pNa">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LUn-gg-BnA">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LUn-gg-BnA">
                                                     <rect key="frame" x="0.0" y="8" width="100" height="64"/>
+                                                    <color key="backgroundColor" red="0.60816714640000002" green="0.59038342929999998" blue="0.49113384049999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <accessibilityTraits key="traits" none="YES" image="YES" notEnabled="YES"/>
                                                     </accessibility>
@@ -227,14 +228,18 @@
                                                 <constraint firstItem="LUn-gg-BnA" firstAttribute="leading" secondItem="l0v-Su-pNa" secondAttribute="leadingMargin" constant="-8" id="46r-Yu-HqA"/>
                                                 <constraint firstItem="Esd-qj-LIB" firstAttribute="top" secondItem="l0v-Su-pNa" secondAttribute="topMargin" id="8H4-pK-AqW"/>
                                                 <constraint firstItem="b9d-0a-b5L" firstAttribute="leading" secondItem="LUn-gg-BnA" secondAttribute="trailing" constant="8" symbolic="YES" id="C72-WG-Fbh"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="b9d-0a-b5L" secondAttribute="trailing" id="DhP-z3-0bd"/>
                                                 <constraint firstItem="Esd-qj-LIB" firstAttribute="leading" secondItem="LUn-gg-BnA" secondAttribute="trailing" constant="8" symbolic="YES" id="F5c-5V-QtK"/>
                                                 <constraint firstItem="LUn-gg-BnA" firstAttribute="top" secondItem="l0v-Su-pNa" secondAttribute="topMargin" constant="-8" id="KWa-mZ-fUV"/>
                                                 <constraint firstAttribute="centerY" secondItem="LUn-gg-BnA" secondAttribute="centerY" id="PaU-Hx-N8B"/>
                                                 <constraint firstItem="b9d-0a-b5L" firstAttribute="bottom" secondItem="l0v-Su-pNa" secondAttribute="bottomMargin" id="VyB-4A-RZ3"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Esd-qj-LIB" secondAttribute="trailing" constant="442" id="XKQ-yq-UYz"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Esd-qj-LIB" secondAttribute="trailing" id="mTZ-g8-0Cr"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="KWa-mZ-fUV"/>
+                                                    <exclude reference="XKQ-yq-UYz"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
