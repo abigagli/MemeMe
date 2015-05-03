@@ -202,6 +202,7 @@ class MemeEditorViewController: UIViewController {
         topTextField.text = previousTopText
         bottomTextField.text = previousBottomText
         fieldBeingEdited = .none
+        updateUI()
     }
     
     private func numSavedMemes() -> Int {
