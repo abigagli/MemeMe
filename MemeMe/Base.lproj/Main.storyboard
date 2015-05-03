@@ -5,7 +5,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Meme Editor View Controller-->
+        <!--Meme Editor-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="MemeEditorViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -72,7 +72,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="NLk-fa-hm6" secondAttribute="trailing" constant="-16" id="wQp-RE-L0C"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="8b1-Fe-mKm">
+                    <navigationItem key="navigationItem" title="Meme Editor" id="8b1-Fe-mKm">
                         <barButtonItem key="leftBarButtonItem" enabled="NO" systemItem="action" id="ewK-QK-lSx">
                             <connections>
                                 <action selector="shareMeme:" destination="vXZ-lx-hvc" id="Sqd-ef-sbd"/>
@@ -115,7 +115,7 @@
             </objects>
             <point key="canvasLocation" x="1602" y="2556"/>
         </scene>
-        <!--Saved Meme Collection View Controller-->
+        <!--Sent Memes-->
         <scene sceneID="qZU-pB-yet">
             <objects>
                 <viewController id="7jg-8v-Iht" customClass="SavedMemeCollectionViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -150,7 +150,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="gFz-Hn-A8L">
+                    <navigationItem key="navigationItem" title="Sent Memes" id="gFz-Hn-A8L">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ewl-Dj-AVj">
                             <connections>
                                 <segue destination="hdN-E6-Mnf" kind="presentation" id="4Sd-s0-SSf"/>
@@ -179,10 +179,10 @@
             </objects>
             <point key="canvasLocation" x="1602" y="928"/>
         </scene>
-        <!--Saved Meme Table View Controller-->
+        <!--Sent Meme Table View Controller-->
         <scene sceneID="AgQ-Ac-R7e">
             <objects>
-                <viewController id="jBb-1D-ajC" customClass="SavedMemeTableViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="jBb-1D-ajC" userLabel="Sent Meme Table View Controller" customClass="SavedMemeTableViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DZH-AB-dGa"/>
                         <viewControllerLayoutGuide type="bottom" id="YqA-b1-hBb"/>
@@ -264,7 +264,7 @@
                             <constraint firstItem="74b-be-9IV" firstAttribute="top" secondItem="wXR-iN-Mhf" secondAttribute="top" id="sbP-Dw-Y3m"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="gFO-ta-Jw2">
+                    <navigationItem key="navigationItem" title="Sent Memes" id="gFO-ta-Jw2">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="djL-ee-b7V">
                             <connections>
                                 <segue destination="hdN-E6-Mnf" kind="presentation" id="Voy-f9-OfT"/>
