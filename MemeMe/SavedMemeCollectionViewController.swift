@@ -10,6 +10,7 @@ import UIKit
 
 class SavedMemeCollectionViewController: UIViewController {
     
+    @IBOutlet weak var collectionView: UICollectionView!
     var savedMemes: [Meme]!
 
     override func viewDidLoad() {
@@ -26,6 +27,7 @@ class SavedMemeCollectionViewController: UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
         savedMemes = appDelegate.savedMemes
@@ -34,6 +36,17 @@ class SavedMemeCollectionViewController: UIViewController {
             
             let memeEditorNav = storyboard?.instantiateViewControllerWithIdentifier("MemeEditorNav") as! UINavigationController
             presentViewController(memeEditorNav, animated: false, completion: nil)
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if savedMemes.count == 0 {
+            self.tabBarController!.performSegueWithIdentifier("SegueToMemeEditor", sender: self)
+        }
+        else {
+            collectionView.reloadData()
         }
     }
 }
@@ -47,18 +60,19 @@ extension SavedMemeCollectionViewController: UICollectionViewDataSource, UIColle
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SavedMemeCollectionViewCell", forIndexPath: indexPath) as! SavedMemeCollectionViewCell
-        let meme = savedMemes[indexPath.row]
         
-        cell.myImageView.image = meme.memedImage
+        let meme = savedMemes[indexPath.row]
+        //cell.myImageView.image = meme.memedImage
+        cell.topLabel.text = meme.topText
+        cell.bottomLabel.text = meme.bottomText
+        cell.backgroundView = UIImageView(image: meme.originalImage)
     
         return cell
     }
     
-    /*
-    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("SentMemeDetailViewController")! as! SentMemeDetailViewController
-        detailController.villain = self.allVillains[indexPath.row]
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as! MemeDetailViewController
+        detailController.memedImageView = UIImageView(image: savedMemes[indexPath.item].memedImage)
         self.navigationController!.pushViewController(detailController, animated: true)
     }
-    */
 }

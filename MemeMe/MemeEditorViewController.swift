@@ -224,6 +224,7 @@ class MemeEditorViewController: UIViewController {
         //Avoid rendering default placeholder text
         let topText = topTextField.text
         let bottomText = bottomTextField.text
+        //let imageBackGround = imageView.backgroundColor
         
         if topTextField.text == "TOP" {
             topTextField.text = ""
@@ -232,6 +233,9 @@ class MemeEditorViewController: UIViewController {
         if bottomTextField.text == "BOTTOM" {
             bottomTextField.text = ""
         }
+        
+        //imageView.backgroundColor = UIColor.clearColor()
+        
         UIGraphicsBeginImageContext(view.frame.size)
         view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
         let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -240,7 +244,8 @@ class MemeEditorViewController: UIViewController {
         //Restore textfields' content
         topTextField.text = topText
         bottomTextField.text = bottomText
-        
+        //imageView.backgroundColor = imageBackGround
+
         showBars()
         
         return memedImage

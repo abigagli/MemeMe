@@ -9,7 +9,7 @@
 import UIKit
 
 class SavedMemeCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var myImageView: UIImageView!
+    //@IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var bottomLabel: UILabel!
 }
