@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SentMemeTableViewController: UIViewController {
+class SavedMemeTableViewController: UIViewController {
     
     var savedMemes: [Meme]!
 
@@ -55,20 +55,21 @@ class SentMemeTableViewController: UIViewController {
 
 }
 
-extension SentMemeTableViewController : UITableViewDataSource, UITableViewDelegate
+//MARK: Protocol conformance
+extension SavedMemeTableViewController : UITableViewDataSource, UITableViewDelegate
 {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return savedMemes.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SavedMemeTableViewCell") as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("SavedMemeTableViewCell") as! SavedMemeTableViewCell
         let meme = savedMemes[indexPath.row]
         
         // Set the name and image
-        cell.textLabel?.text = meme.topText
-        cell.detailTextLabel?.text = meme.bottomText
-        cell.imageView?.image = meme.originalImage
+        cell.topLabel.text = meme.topText
+        cell.bottomLabel.text = meme.bottomText
+        cell.myImageView.image = meme.originalImage
         
         return cell
     }

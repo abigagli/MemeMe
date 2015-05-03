@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SentMemeCollectionViewController: UIViewController {
+class SavedMemeCollectionViewController: UIViewController {
     
     var savedMemes: [Meme]!
 

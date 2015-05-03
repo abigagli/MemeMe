@@ -8,6 +8,7 @@
 
 import UIKit
 
+//Overrid property observer for UIImageView to make it easy keeping UI (sharing button in particular) in sync
 protocol ObservableUIImageViewDelegate
 {
     func imageDidSet(image: UIImage?)
@@ -76,18 +77,32 @@ class MemeEditorViewController: UIViewController {
         /////////////////////////
         
         
-        if numSavedMemes() > 0 {
+        //Cancel behavior depends on context:
+        //A) When editing a textfield, just resets text editing and restore previous textfields' content
+        //B) otherwise if there are saved memes, just dismiss ourself and get back to saved memes' view
+        //C) otherwise alert the user that we can't do anything else than editing a new meme
+        if fieldBeingEdited != .none {
+            resetTextEditing()
+        }
+        else if numSavedMemes() > 0 {
             //Dismiss ourselves and return to the sentmemesVC
             self.dismissViewControllerAnimated(true, completion: nil)
         }
-        else if fieldBeingEdited == .none {
+        else {
             let nextController = UIAlertController(title: "MemeEditor", message: "I'd really like to see a meme", preferredStyle: .Alert)
+            
+            
+            //Always let the user start from scratch
             let okAction = UIAlertAction(title:"Ok, let's meme from scratch!", style: .Default) {action in self.cleanSlate()}
             nextController.addAction(okAction)
+
+            //But if there's an image already set, allow the user to keep editing it
+            if imageView.image != nil {
+                let keepEditing = UIAlertAction(title:"Keep editing current meme", style: .Default, handler: nil)
+                nextController.addAction(keepEditing)
+
+            }
             presentViewController(nextController, animated: true, completion: nil)
-        }
-        else {
-            resetTextEditing()
         }
     }
     
@@ -132,11 +147,6 @@ class MemeEditorViewController: UIViewController {
         unsubscribeFromKeyboardNotifications()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 
     //MARK: Notifications
     private func subscribeToKeyboardNotifications() {
@@ -199,7 +209,9 @@ class MemeEditorViewController: UIViewController {
     }
     
     private func saveMemedImage() {
-        var meme = Meme(topText: topTextField.text, bottomText: bottomTextField.text, originalImage: imageView.image!, memedImage: self.memedImage!)
+        let topText = topTextField.text == "TOP" ? "" : topTextField.text
+        let bottomText = bottomTextField.text == "BOTTOM" ? "" : bottomTextField.text
+        var meme = Meme(topText: topText, bottomText: bottomText, originalImage: imageView.image!, memedImage: self.memedImage!)
         
         (UIApplication.sharedApplication().delegate as! AppDelegate).savedMemes.append(meme)
     }
@@ -208,10 +220,26 @@ class MemeEditorViewController: UIViewController {
         
         hideBars()
         
+        //Avoid rendering default placeholder text
+        let topText = topTextField.text
+        let bottomText = bottomTextField.text
+        
+        if topTextField.text == "TOP" {
+            topTextField.text = ""
+        }
+        
+        if bottomTextField.text == "BOTTOM" {
+            bottomTextField.text = ""
+        }
         UIGraphicsBeginImageContext(view.frame.size)
         view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
         let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        
+        //Restore textfields' content
+        topTextField.text = topText
+        bottomTextField.text = bottomText
+        
         showBars()
         
         return memedImage
@@ -235,6 +263,9 @@ class MemeEditorViewController: UIViewController {
     }
 }
 
+
+
+//MARK: Protocol conformance
 extension MemeEditorViewController: UITextFieldDelegate
 {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
