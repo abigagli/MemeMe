@@ -14,6 +14,7 @@ class SavedMemeTableViewCell: UITableViewCell {
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var bottomLabel: UILabel!
     
+    //FIXME: Remove template stubs?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

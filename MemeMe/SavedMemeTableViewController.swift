@@ -42,17 +42,6 @@ class SavedMemeTableViewController: UIViewController {
             tableView.reloadData()
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 //MARK: Protocol conformance
@@ -69,19 +58,19 @@ extension SavedMemeTableViewController : UITableViewDataSource, UITableViewDeleg
         // Set the name and image
         cell.topLabel.text = meme.topText
         cell.bottomLabel.text = meme.bottomText
-        cell.myImageView.image = meme.originalImage
+        cell.myImageView.image = meme.memedImage
         
         return cell
     }
     
+
     /*
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("SentMemeDetailViewController")! as! SentMemeDetailViewController
+        detailController.villain = self.allVillains[indexPath.row]
+        self.navigationController!.pushViewController(detailController, animated: true)
 
-func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
-let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("VillainDetailViewController")! as! VillainDetailViewController
-detailController.villain = self.allVillains[indexPath.row]
-self.navigationController!.pushViewController(detailController, animated: true)
-
-}
-*/
+    }
+    */
 }

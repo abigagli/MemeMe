@@ -36,14 +36,29 @@ class SavedMemeCollectionViewController: UIViewController {
             presentViewController(memeEditorNav, animated: false, completion: nil)
         }
     }
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+//MARK: Protocol conformance
+extension SavedMemeCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate
+{
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return savedMemes.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SavedMemeCollectionViewCell", forIndexPath: indexPath) as! SavedMemeCollectionViewCell
+        let meme = savedMemes[indexPath.row]
+        
+        cell.myImageView.image = meme.memedImage
+    
+        return cell
+    }
+    
+    /*
+    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("SentMemeDetailViewController")! as! SentMemeDetailViewController
+        detailController.villain = self.allVillains[indexPath.row]
+        self.navigationController!.pushViewController(detailController, animated: true)
     }
     */
-
 }
