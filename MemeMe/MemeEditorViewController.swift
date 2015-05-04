@@ -27,6 +27,11 @@ class ObservableUIImageView : UIImageView
 
 class MemeEditorViewController: UIViewController {
     
+    private struct Defaults {
+        static let kTopText = "TOP"
+        static let kBottomText = "BOTTOM"
+    }
+    
     //MARK: State
     private enum WhichField {
         case none
@@ -63,6 +68,12 @@ class MemeEditorViewController: UIViewController {
         presentViewController (pickerViewController, animated: true, completion: nil)
     }
 
+    @IBAction func tapOnImage(sender: UITapGestureRecognizer) {
+        if fieldBeingEdited != .none {
+            stopTextEditing(restorePreviousText: false)
+        }
+        
+    }
     @IBAction func shareMeme(sender: UIBarButtonItem) {
         memedImage = memeizeImage(imageView.image!)
         
@@ -71,36 +82,36 @@ class MemeEditorViewController: UIViewController {
         presentViewController(activityViewController, animated: true, completion: nil)
     }
     @IBAction func cancelMemeEditing(sender: UIBarButtonItem) {
-        //FIXME: Just for debugging
-        //memedImage = memeizeImage(imageView.image!)
-        //saveMemedImage()
-        /////////////////////////
-        
-        
         //Cancel behavior depends on context:
-        //A) When editing a textfield, just resets text editing and restore previous textfields' content
-        //B) otherwise if there are saved memes, just dismiss ourself and get back to saved memes' view
-        //C) otherwise alert the user that we can't do anything else than editing a new meme
-        if fieldBeingEdited != .none {
-            resetTextEditing()
+        if fieldBeingEdited != .none { //While text editing, just stop it and restore previous text
+            stopTextEditing(restorePreviousText: true)
         }
-        else if numSavedMemes() > 0 {
-            //Dismiss ourselves and return to the sentmemesVC
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        else {
+        else { //Otherwise alert the user depending on if we have already saved memes and/or we've an image being currently edited
             let nextController = UIAlertController(title: "MemeEditor", message: "I'd really like to see a meme", preferredStyle: .Alert)
             
-            
-            //Always let the user start from scratch
-            let okAction = UIAlertAction(title:"Ok, let's meme from scratch!", style: .Default) {action in self.cleanSlate()}
-            nextController.addAction(okAction)
-
-            //But if there's an image already set, allow the user to keep editing it
-            if imageView.image != nil {
-                let keepEditing = UIAlertAction(title:"Keep editing current meme", style: .Default, handler: nil)
-                nextController.addAction(keepEditing)
-
+            if numSavedMemes() > 0 {
+                if imageView.image != nil { //We have saved memes, but we're currently editing one, so ask for confirmation
+                    nextController.message = "Do you really want to go back to saved memes?"
+                    let okAction = UIAlertAction(title:"Yes, show my saved memes", style: .Default) {action in self.dismissViewControllerAnimated(true, completion: nil)}
+                    let cancelAction = UIAlertAction(title:"No, I want to keep editing this one", style: .Default, handler: nil)
+                    nextController.addAction(okAction)
+                    nextController.addAction(cancelAction)
+                }
+                else { //We have saved memes, but not currently editing one, so just bail out...
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            }
+            else {
+                //Always let the user start from scratch if there are no saved memes
+                let okAction = UIAlertAction(title:"Ok, let's meme from scratch!", style: .Default) {action in self.cleanSlate()}
+                nextController.addAction(okAction)
+                
+                //But if there's an image already set, allow the user to keep editing it
+                if imageView.image != nil {
+                    let keepEditing = UIAlertAction(title:"Keep editing current meme", style: .Default, handler: nil)
+                    nextController.addAction(keepEditing)
+                    
+                }
             }
             presentViewController(nextController, animated: true, completion: nil)
         }
@@ -184,13 +195,13 @@ class MemeEditorViewController: UIViewController {
     
     private func cleanSlate() {
         imageView.image = nil
-        previousTopText = "TOP"
-        previousBottomText = "BOTTOM"
-        resetTextEditing()
+        previousTopText = Defaults.kTopText
+        previousBottomText = Defaults.kBottomText
+        stopTextEditing(restorePreviousText: true)
     }
     
     
-    private func resetTextEditing () {
+    private func stopTextEditing (#restorePreviousText: Bool) {
         switch fieldBeingEdited {
         case .top :
             topTextField.resignFirstResponder()
@@ -199,8 +210,12 @@ class MemeEditorViewController: UIViewController {
         default :
            break
         }
-        topTextField.text = previousTopText
-        bottomTextField.text = previousBottomText
+        
+        if restorePreviousText {
+            topTextField.text = previousTopText
+            bottomTextField.text = previousBottomText
+        }
+        
         fieldBeingEdited = .none
         updateUI()
     }
@@ -210,8 +225,10 @@ class MemeEditorViewController: UIViewController {
     }
     
     private func saveMemedImage() {
-        let topText = topTextField.text == "TOP" ? "" : topTextField.text
-        let bottomText = bottomTextField.text == "BOTTOM" ? "" : bottomTextField.text
+        //If the user didn't write any specific text, avoid storing default text labels
+        let topText = topTextField.text == Defaults.kTopText ? "" : topTextField.text
+        let bottomText = bottomTextField.text == Defaults.kBottomText ? "" : bottomTextField.text
+        
         var meme = Meme(topText: topText, bottomText: bottomText, originalImage: imageView.image!, memedImage: self.memedImage!)
         
         (UIApplication.sharedApplication().delegate as! AppDelegate).savedMemes.append(meme)
@@ -224,17 +241,14 @@ class MemeEditorViewController: UIViewController {
         //Avoid rendering default placeholder text
         let topText = topTextField.text
         let bottomText = bottomTextField.text
-        //let imageBackGround = imageView.backgroundColor
         
-        if topTextField.text == "TOP" {
+        if topTextField.text == Defaults.kTopText {
             topTextField.text = ""
         }
         
-        if bottomTextField.text == "BOTTOM" {
+        if bottomTextField.text == Defaults.kBottomText {
             bottomTextField.text = ""
         }
-        
-        //imageView.backgroundColor = UIColor.clearColor()
         
         UIGraphicsBeginImageContext(view.frame.size)
         view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
@@ -244,7 +258,6 @@ class MemeEditorViewController: UIViewController {
         //Restore textfields' content
         topTextField.text = topText
         bottomTextField.text = bottomText
-        //imageView.backgroundColor = imageBackGround
 
         showBars()
         
@@ -265,7 +278,19 @@ class MemeEditorViewController: UIViewController {
     
     private func updateUI() {
         navigationItem.leftBarButtonItem!.enabled = imageView.image != nil
-        //navigationItem.rightBarButtonItem!.enabled = (imageView.image != nil) || (numSavedMemes() > 0)
+    }
+    
+    private func ensureDefaultText(forTextField textField: UITextField) {
+        
+        if textField.text.isEmpty {
+            if textField == topTextField {
+                textField.text =  Defaults.kTopText
+            }
+            else if textField == bottomTextField {
+                textField.text =  Defaults.kBottomText
+            }
+        }
+        
     }
 }
 
@@ -275,22 +300,7 @@ class MemeEditorViewController: UIViewController {
 extension MemeEditorViewController: UITextFieldDelegate
 {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if textField == topTextField {
-            if textField.text.isEmpty {
-                textField.text =  "TOP"
-            }
-            previousTopText = textField.text
-        }
-        if textField == bottomTextField {
-            if textField.text.isEmpty {
-                textField.text =  "BOTTOM"
-            }
-            previousBottomText = textField.text
-        }
-        
         textField.resignFirstResponder()
-        fieldBeingEdited = .none
-        updateUI()
         return true
     }
     
@@ -298,20 +308,26 @@ extension MemeEditorViewController: UITextFieldDelegate
         if textField == topTextField {
             fieldBeingEdited = .top
             previousTopText = textField.text
-            if textField.text == "TOP" {
+            if textField.text == Defaults.kTopText {
                 textField.text = ""
             }
         }
         else if textField == bottomTextField {
             fieldBeingEdited = .bottom
             previousBottomText = textField.text
-            if textField.text == "BOTTOM" {
+            if textField.text == Defaults.kBottomText {
             textField.text = ""
             }
         }
         
         //Prevent sharing while editing text fields
         navigationItem.leftBarButtonItem!.enabled = false
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        ensureDefaultText(forTextField: textField)
+        fieldBeingEdited = .none
+        updateUI()
     }
 }
 
