@@ -341,8 +341,22 @@
                     <view key="view" contentMode="scaleToFill" id="ndT-et-lOQ">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aSG-cz-A1s">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="xcX-N4-YAn" firstAttribute="top" secondItem="aSG-cz-A1s" secondAttribute="bottom" id="76D-sx-O4e"/>
+                            <constraint firstItem="aSG-cz-A1s" firstAttribute="leading" secondItem="ndT-et-lOQ" secondAttribute="leading" id="OQJ-cy-V4p"/>
+                            <constraint firstAttribute="trailing" secondItem="aSG-cz-A1s" secondAttribute="trailing" id="w7F-lO-LYH"/>
+                            <constraint firstItem="aSG-cz-A1s" firstAttribute="top" secondItem="ndT-et-lOQ" secondAttribute="top" id="yqN-20-lgQ"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="aSG-cz-A1s" id="jCA-5Y-Po4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UjS-Ox-Vr9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

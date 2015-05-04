@@ -72,7 +72,7 @@ extension SavedMemeCollectionViewController: UICollectionViewDataSource, UIColle
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as! MemeDetailViewController
-        detailController.memedImageView = UIImageView(image: savedMemes[indexPath.item].memedImage)
+        detailController.memedImage = savedMemes[indexPath.item].memedImage
         self.navigationController!.pushViewController(detailController, animated: true)
     }
 }

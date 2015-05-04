@@ -67,7 +67,7 @@ extension SavedMemeTableViewController : UITableViewDataSource, UITableViewDeleg
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as! MemeDetailViewController
-        detailController.memedImageView = UIImageView(image: savedMemes[indexPath.row].memedImage)
+        detailController.memedImage = savedMemes[indexPath.row].memedImage
         self.navigationController!.pushViewController(detailController, animated: true)
 
     }
