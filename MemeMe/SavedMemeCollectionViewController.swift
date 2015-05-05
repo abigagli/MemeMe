@@ -11,7 +11,9 @@ import UIKit
 class SavedMemeCollectionViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    
     var savedMemes: [Meme]!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,19 +30,16 @@ class SavedMemeCollectionViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
         savedMemes = appDelegate.savedMemes
         
-        if savedMemes.count == 0 {
-            
-            let memeEditorNav = storyboard?.instantiateViewControllerWithIdentifier("MemeEditorNav") as! UINavigationController
-            presentViewController(memeEditorNav, animated: false, completion: nil)
-        }
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
         
         if savedMemes.count == 0 {
             self.tabBarController!.performSegueWithIdentifier("SegueToMemeEditor", sender: self)
@@ -49,6 +48,20 @@ class SavedMemeCollectionViewController: UIViewController {
             collectionView.reloadData()
         }
     }
+    
+    override func viewDidLayoutSubviews() {
+        updateCellFrame(collectionView.frame.size)
+    }
+    
+    private func updateCellFrame(forViewSize: CGSize) {
+        let width = forViewSize.width / 3
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        
+        layout.itemSize = CGSize(width: width, height: width)
+        collectionView.performBatchUpdates(nil, completion: nil)
+
+    }
+    
 }
 
 //MARK: Protocol conformance

@@ -10,9 +10,10 @@ import UIKit
 
 class SavedMemeTableViewController: UIViewController {
     
+    @IBOutlet weak var tableView: UITableView!
+    
     var savedMemes: [Meme]!
 
-    @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
