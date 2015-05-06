@@ -10,11 +10,20 @@ import UIKit
 
 class SavedMemeTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var myImageView: UIImageView!
+    @IBOutlet weak var cellImageView: UIImageView!
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var bottomLabel: UILabel!
     
-    //FIXME: Remove template stubs?
+    var meme: Meme? {
+        didSet {
+            if let meme = meme {
+                cellImageView.image = meme.memedImage
+                topLabel.text = meme.topText
+                bottomLabel.text = meme.bottomText
+            }
+        }
+    }
+    /*
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,5 +33,6 @@ class SavedMemeTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    */
 
 }

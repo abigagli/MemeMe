@@ -63,11 +63,7 @@ extension SavedMemeTableViewController : UITableViewDataSource, UITableViewDeleg
         let cell = tableView.dequeueReusableCellWithIdentifier("SavedMemeTableViewCell") as! SavedMemeTableViewCell
         let meme = savedMemes[indexPath.row]
         
-        // Set the name and image
-        cell.topLabel.text = meme.topText
-        cell.bottomLabel.text = meme.bottomText
-        cell.myImageView.image = meme.memedImage
-        
+        cell.meme = meme
         return cell
     }
     
