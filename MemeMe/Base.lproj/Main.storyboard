@@ -210,6 +210,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="K9w-Ja-gF2" id="rYV-QY-jUo"/>
+                        <segue destination="lwe-4a-S8Y" kind="show" identifier="CollectionToDetail" id="QqK-Ft-1Qo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZuC-eb-hyY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -319,6 +320,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="74b-be-9IV" id="Wji-Rm-Keb"/>
+                        <segue destination="lwe-4a-S8Y" kind="show" identifier="TableToDetail" id="sfd-um-hUJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wTi-Hq-Hvp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -402,5 +404,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="4Sd-s0-SSf"/>
+        <segue reference="QqK-Ft-1Qo"/>
     </inferredMetricsTieBreakers>
 </document>

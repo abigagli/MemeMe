@@ -43,6 +43,13 @@ class SavedMemeTableViewController: UIViewController {
             tableView.reloadData()
         }
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "TableToDetail" {
+            let detailViewController = segue.destinationViewController as! MemeDetailViewController
+            detailViewController.memedImage = sender as? UIImage
+        }
+    }
 }
 
 //MARK: Protocol conformance
@@ -66,10 +73,10 @@ extension SavedMemeTableViewController : UITableViewDataSource, UITableViewDeleg
     
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let memedImage = savedMemes[indexPath.row].memedImage
         
-        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as! MemeDetailViewController
-        detailController.memedImage = savedMemes[indexPath.row].memedImage
-        self.navigationController!.pushViewController(detailController, animated: true)
-
+        //Hijack the sender argument to let prepareSegue access the memedImage without 
+        //having to add a property just for that...
+        performSegueWithIdentifier("TableToDetail", sender: memedImage)
     }
 }
