@@ -18,6 +18,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NLk-fa-hm6" customClass="ObservableUIImageView" customModule="MemeMe" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="TgC-5J-FOL" appends="YES" id="6TI-W5-lEI"/>
+                                </connections>
+                            </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0sO-S2-cAs">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <constraints>
@@ -39,22 +47,14 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="YaO-am-9Vl"/>
                                 </items>
                             </toolbar>
-                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NLk-fa-hm6" customClass="ObservableUIImageView" customModule="MemeMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="TgC-5J-FOL" appends="YES" id="6TI-W5-lEI"/>
-                                </connections>
-                            </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xkd-Rr-d21" userLabel="TopTextField">
-                                <rect key="frame" x="16" y="107" width="568" height="17"/>
+                                <rect key="frame" x="16" y="104" width="568" height="17"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QZ3-x5-DKR" userLabel="BottomTextField">
-                                <rect key="frame" x="16" y="496" width="568" height="17"/>
+                                <rect key="frame" x="16" y="499" width="568" height="17"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
@@ -62,19 +62,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="NLk-fa-hm6" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="17n-Xt-TGp"/>
                             <constraint firstItem="QZ3-x5-DKR" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="1xu-fb-Qld"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="0sO-S2-cAs" secondAttribute="bottom" id="4cy-yT-YVX"/>
-                            <constraint firstItem="0sO-S2-cAs" firstAttribute="top" secondItem="NLk-fa-hm6" secondAttribute="bottom" id="9wa-Wq-nOO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QZ3-x5-DKR" secondAttribute="trailing" id="GIW-Vz-HMc"/>
+                            <constraint firstItem="NLk-fa-hm6" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="GXJ-GB-Rgf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0sO-S2-cAs" secondAttribute="trailing" constant="-16" id="KjS-BU-nAp"/>
-                            <constraint firstItem="QZ3-x5-DKR" firstAttribute="top" secondItem="NLk-fa-hm6" secondAttribute="bottom" constant="-60" id="OCz-Fe-9pD"/>
-                            <constraint firstItem="NLk-fa-hm6" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="PuW-7M-s2Y"/>
+                            <constraint firstItem="0sO-S2-cAs" firstAttribute="top" secondItem="QZ3-x5-DKR" secondAttribute="bottom" constant="40" id="Luc-u3-xb8"/>
+                            <constraint firstAttribute="bottom" secondItem="NLk-fa-hm6" secondAttribute="bottom" id="W5B-ix-m2a"/>
                             <constraint firstItem="Xkd-Rr-d21" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="cWy-VT-FvT"/>
-                            <constraint firstItem="NLk-fa-hm6" firstAttribute="top" secondItem="Xkd-Rr-d21" secondAttribute="bottom" constant="-60" id="ha1-rP-cUo"/>
-                            <constraint firstItem="NLk-fa-hm6" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="iP3-qu-ozO"/>
+                            <constraint firstAttribute="trailing" secondItem="NLk-fa-hm6" secondAttribute="trailing" id="fnl-kR-jwC"/>
+                            <constraint firstItem="Xkd-Rr-d21" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="40" id="kiB-E1-2aE"/>
                             <constraint firstItem="0sO-S2-cAs" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="m1r-t7-x2L"/>
                             <constraint firstItem="Xkd-Rr-d21" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="mx5-Fg-pXp"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="NLk-fa-hm6" secondAttribute="trailing" constant="-16" id="wQp-RE-L0C"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Meme Editor" id="8b1-Fe-mKm">
@@ -360,16 +360,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aSG-cz-A1s">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="xcX-N4-YAn" firstAttribute="top" secondItem="aSG-cz-A1s" secondAttribute="bottom" id="76D-sx-O4e"/>
                             <constraint firstItem="aSG-cz-A1s" firstAttribute="leading" secondItem="ndT-et-lOQ" secondAttribute="leading" id="OQJ-cy-V4p"/>
+                            <constraint firstItem="aSG-cz-A1s" firstAttribute="top" secondItem="Y2R-PN-ZJx" secondAttribute="bottom" id="R1B-D5-aKv"/>
                             <constraint firstAttribute="trailing" secondItem="aSG-cz-A1s" secondAttribute="trailing" id="w7F-lO-LYH"/>
                             <constraint firstItem="aSG-cz-A1s" firstAttribute="top" secondItem="ndT-et-lOQ" secondAttribute="top" id="yqN-20-lgQ"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="yqN-20-lgQ"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="aSG-cz-A1s" id="jCA-5Y-Po4"/>
