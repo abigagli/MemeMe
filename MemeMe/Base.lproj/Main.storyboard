@@ -250,28 +250,34 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SavedMemeTableViewCell" rowHeight="160" id="KRN-bV-Jfr" customClass="SavedMemeTableViewCell" customModule="MemeMe" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SavedMemeTableViewCell" rowHeight="200" id="KRN-bV-Jfr" customClass="SavedMemeTableViewCell" customModule="MemeMe" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KRN-bV-Jfr" id="l0v-Su-pNa">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="LUn-gg-BnA">
-                                                    <rect key="frame" x="0.0" y="0.0" width="159" height="159"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="199" height="199"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <accessibilityTraits key="traits" none="YES" image="YES" notEnabled="YES"/>
                                                     </accessibility>
                                                     <constraints>
+                                                        <constraint firstAttribute="width" secondItem="LUn-gg-BnA" secondAttribute="height" multiplier="1:1" id="Pru-UZ-hbf"/>
                                                         <constraint firstAttribute="width" secondItem="LUn-gg-BnA" secondAttribute="height" multiplier="100:100" id="tDa-1K-PTM"/>
                                                     </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="tDa-1K-PTM"/>
+                                                        </mask>
+                                                    </variation>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Esd-qj-LIB">
-                                                    <rect key="frame" x="167" y="8" width="42" height="21"/>
+                                                    <rect key="frame" x="207" y="8" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9d-0a-b5L">
-                                                    <rect key="frame" x="167" y="130" width="42" height="21"/>
+                                                    <rect key="frame" x="207" y="170" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -292,7 +298,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="bottomLabel" destination="b9d-0a-b5L" id="GpG-Xs-tBn"/>
-                                            <outlet property="myImageView" destination="LUn-gg-BnA" id="wJJ-yh-U2M"/>
+                                            <outlet property="cellImageView" destination="LUn-gg-BnA" id="Le5-Ci-YpM"/>
                                             <outlet property="topLabel" destination="Esd-qj-LIB" id="htk-od-ZLY"/>
                                         </connections>
                                     </tableViewCell>
@@ -360,20 +366,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aSG-cz-A1s">
-                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="xcX-N4-YAn" firstAttribute="top" secondItem="aSG-cz-A1s" secondAttribute="bottom" id="76D-sx-O4e"/>
                             <constraint firstItem="aSG-cz-A1s" firstAttribute="leading" secondItem="ndT-et-lOQ" secondAttribute="leading" id="OQJ-cy-V4p"/>
+                            <constraint firstItem="aSG-cz-A1s" firstAttribute="top" secondItem="ndT-et-lOQ" secondAttribute="top" id="PFZ-ky-DgQ"/>
                             <constraint firstItem="aSG-cz-A1s" firstAttribute="top" secondItem="Y2R-PN-ZJx" secondAttribute="bottom" id="R1B-D5-aKv"/>
+                            <constraint firstAttribute="bottom" secondItem="aSG-cz-A1s" secondAttribute="bottom" id="kMd-0Z-bXk"/>
                             <constraint firstAttribute="trailing" secondItem="aSG-cz-A1s" secondAttribute="trailing" id="w7F-lO-LYH"/>
                             <constraint firstItem="aSG-cz-A1s" firstAttribute="top" secondItem="ndT-et-lOQ" secondAttribute="top" id="yqN-20-lgQ"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="R1B-D5-aKv"/>
                                 <exclude reference="yqN-20-lgQ"/>
+                                <exclude reference="76D-sx-O4e"/>
                             </mask>
                         </variation>
                     </view>
@@ -409,7 +419,7 @@
         <image name="table_icon" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4Sd-s0-SSf"/>
-        <segue reference="QqK-Ft-1Qo"/>
+        <segue reference="Voy-f9-OfT"/>
+        <segue reference="sfd-um-hUJ"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -202,6 +202,11 @@ class MemeEditorViewController: UIViewController {
     
     
     private func stopTextEditing (#restorePreviousText: Bool) {
+        if restorePreviousText {
+            topTextField.text = previousTopText
+            bottomTextField.text = previousBottomText
+        }
+        
         switch fieldBeingEdited {
         case .top :
             topTextField.resignFirstResponder()
@@ -211,10 +216,6 @@ class MemeEditorViewController: UIViewController {
            break
         }
         
-        if restorePreviousText {
-            topTextField.text = previousTopText
-            bottomTextField.text = previousBottomText
-        }
         
         fieldBeingEdited = .none
         updateUI()
@@ -325,6 +326,12 @@ extension MemeEditorViewController: UITextFieldDelegate
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
+        if textField == topTextField {
+            previousTopText = textField.text
+        }
+        else if textField == bottomTextField {
+            previousBottomText = textField.text
+        }
         ensureDefaultText(forTextField: textField)
         fieldBeingEdited = .none
         updateUI()
