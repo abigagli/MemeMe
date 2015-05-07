@@ -84,10 +84,11 @@ extension SavedMemeCollectionViewController: UICollectionViewDataSource, UIColle
         
         let meme = savedMemes[indexPath.row]
         //cell.myImageView.image = meme.memedImage
-        cell.topLabel.text = meme.topText
-        cell.bottomLabel.text = meme.bottomText
-        cell.backgroundView = UIImageView(image: meme.originalImage)
+        //cell.topLabel.text = meme.topText
+        //cell.bottomLabel.text = meme.bottomText
+        //cell.backgroundView = UIImageView(image: meme.originalImage)
     
+        cell.meme = meme
         return cell
     }
     
