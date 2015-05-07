@@ -54,12 +54,10 @@ class SavedMemeCollectionViewController: UIViewController {
     }
     
     private func updateCellFrame(forViewSize: CGSize) {
-        let width = forViewSize.width / 3
+        let width = (forViewSize.width - 8) / 3.0
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         
         layout.itemSize = CGSize(width: width, height: width)
-        collectionView.performBatchUpdates(nil, completion: nil)
-
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -73,6 +71,10 @@ class SavedMemeCollectionViewController: UIViewController {
 //MARK: Protocol conformance
 extension SavedMemeCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate
 {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return savedMemes.count
     }
