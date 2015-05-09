@@ -35,17 +35,14 @@ class SavedMemeCollectionViewController: UIViewController {
         let appDelegate = object as! AppDelegate
         savedMemes = appDelegate.savedMemes
         
+        collectionView.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        
         if savedMemes.count == 0 {
             self.tabBarController!.performSegueWithIdentifier("SegueToMemeEditor", sender: self)
-        }
-        else {
-            collectionView.reloadData()
         }
     }
     
