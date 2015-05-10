@@ -200,7 +200,7 @@
                     <navigationItem key="navigationItem" title="Sent Memes" id="gFz-Hn-A8L">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ewl-Dj-AVj">
                             <connections>
-                                <segue destination="hdN-E6-Mnf" kind="presentation" id="4Sd-s0-SSf"/>
+                                <segue destination="hdN-E6-Mnf" kind="presentation" identifier="CollectionViewToMemeEditor" id="X2E-hQ-L4z"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -310,7 +310,7 @@
                     <navigationItem key="navigationItem" title="Sent Memes" id="gFO-ta-Jw2">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="djL-ee-b7V">
                             <connections>
-                                <segue destination="hdN-E6-Mnf" kind="presentation" id="Voy-f9-OfT"/>
+                                <segue destination="hdN-E6-Mnf" kind="presentation" identifier="TableViewToMemeEditor" id="k7B-6N-t8G"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -336,7 +336,6 @@
                     <connections>
                         <segue destination="9UX-Zi-oyj" kind="relationship" relationship="viewControllers" id="4p6-jy-h8t"/>
                         <segue destination="S2X-o0-JIb" kind="relationship" relationship="viewControllers" id="SZF-cu-YLd"/>
-                        <segue destination="hdN-E6-Mnf" kind="presentation" identifier="SegueToMemeEditor" id="2b2-0T-XxW"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jfl-gN-zKq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -410,6 +409,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="QqK-Ft-1Qo"/>
-        <segue reference="4Sd-s0-SSf"/>
+        <segue reference="X2E-hQ-L4z"/>
     </inferredMetricsTieBreakers>
 </document>

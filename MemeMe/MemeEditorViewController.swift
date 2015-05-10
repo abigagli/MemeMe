@@ -99,6 +99,7 @@ class MemeEditorViewController: UIViewController {
                 }
                 else { //We have saved memes, but not currently editing one, so just bail out...
                     self.dismissViewControllerAnimated(true, completion: nil)
+                    return
                 }
             }
             else {

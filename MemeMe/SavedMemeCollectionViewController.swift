@@ -30,7 +30,7 @@ class SavedMemeCollectionViewController: UIViewController {
         super.viewDidAppear(animated)
         
         if savedMemes.count == 0 {
-            self.tabBarController!.performSegueWithIdentifier("SegueToMemeEditor", sender: self)
+            performSegueWithIdentifier("CollectionViewToMemeEditor", sender: self)
         }
     }
     
