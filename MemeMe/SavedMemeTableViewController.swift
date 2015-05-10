@@ -12,14 +12,15 @@ class SavedMemeTableViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var savedMemes: [Meme]!
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    var savedMemes: [Meme]! {
         
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
-        savedMemes = appDelegate.savedMemes
+        return appDelegate.savedMemes
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
         tableView.reloadData()
     }

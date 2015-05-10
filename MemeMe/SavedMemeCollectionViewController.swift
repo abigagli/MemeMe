@@ -12,16 +12,16 @@ class SavedMemeCollectionViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var savedMemes: [Meme]!
+    var savedMemes: [Meme]! {
+
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+        return appDelegate.savedMemes
+    }
 
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-
-        let object = UIApplication.sharedApplication().delegate
-        let appDelegate = object as! AppDelegate
-        savedMemes = appDelegate.savedMemes
         
         collectionView.reloadData()
     }

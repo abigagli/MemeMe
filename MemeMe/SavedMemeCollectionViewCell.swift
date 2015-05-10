@@ -9,7 +9,6 @@
 import UIKit
 
 class SavedMemeCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var cellImageView: UIImageView!
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var bottomLabel: UILabel!
     
@@ -17,6 +16,8 @@ class SavedMemeCollectionViewCell: UICollectionViewCell {
         didSet {
             if let newMeme = meme {
                 backgroundView = UIImageView(image: newMeme.originalImage)
+                
+                //Add a vertical gradient that makes top/bottom labels stand out better
                 let gradientLayer = CAGradientLayer()
                 gradientLayer.frame = self.backgroundView!.bounds
                 gradientLayer.name = "topbottom_gradient"
@@ -38,6 +39,7 @@ class SavedMemeCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    //Ensure gradient keeps in sync everytime cell layout changes
     override func layoutSubviews() {
         super.layoutSubviews()
         for l in backgroundView!.layer.sublayers {
