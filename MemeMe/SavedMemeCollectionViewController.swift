@@ -8,9 +8,7 @@
 
 import UIKit
 
-class SavedMemeCollectionViewController: UIViewController {
-    
-    @IBOutlet weak var collectionView: UICollectionView!
+class SavedMemeCollectionViewController: UICollectionViewController {
     
     var savedMemes: [Meme]! {
 
@@ -23,7 +21,7 @@ class SavedMemeCollectionViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        collectionView.reloadData()
+        collectionView!.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -35,12 +33,12 @@ class SavedMemeCollectionViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        updateCellFrame(collectionView.frame.size)
+        updateCellFrame(collectionView!.frame.size)
     }
     
     private func updateCellFrame(forViewSize: CGSize) {
         let width = (forViewSize.width - 8) / 3.0
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let layout = collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
         
         layout.itemSize = CGSize(width: width, height: width)
     }
@@ -56,11 +54,11 @@ class SavedMemeCollectionViewController: UIViewController {
 //MARK: Protocol conformance
 extension SavedMemeCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate
 {
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return savedMemes.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SavedMemeCollectionViewCell", forIndexPath: indexPath) as! SavedMemeCollectionViewCell
         
         let meme = savedMemes[indexPath.row]
@@ -69,7 +67,7 @@ extension SavedMemeCollectionViewController: UICollectionViewDataSource, UIColle
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let memedImage = savedMemes[indexPath.row].memedImage
         
         //Hijack the sender argument to let prepareSegue access the memedImage without 
