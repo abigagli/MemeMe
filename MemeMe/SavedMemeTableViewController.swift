@@ -10,8 +10,9 @@ import UIKit
 
 class SavedMemeTableViewController: UITableViewController {
     
-    //@IBOutlet weak var tableView: UITableView!
+    //MARK:State
     
+    //A computed property that simply relates to the actual storage in AppDelegate
     var savedMemes: [Meme]! {
         get {
             let object = UIApplication.sharedApplication().delegate
@@ -25,7 +26,9 @@ class SavedMemeTableViewController: UITableViewController {
         }
     }
 
+    //MARK: Lifetime
     override func viewDidLoad() {
+        super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem()
     }
     

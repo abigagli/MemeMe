@@ -10,14 +10,30 @@ import UIKit
 
 class SavedMemeCollectionViewController: UICollectionViewController {
     
+    //MARK: State
+    var editingCells = false
+    
+    //A computed property that simply relates to the actual storage in AppDelegate
     var savedMemes: [Meme]! {
-
-        let object = UIApplication.sharedApplication().delegate
-        let appDelegate = object as! AppDelegate
-        return appDelegate.savedMemes
+        get {
+            let object = UIApplication.sharedApplication().delegate
+            let appDelegate = object as! AppDelegate
+            return appDelegate.savedMemes
+        }
+        set {
+            let object = UIApplication.sharedApplication().delegate
+            let appDelegate = object as! AppDelegate
+            appDelegate.savedMemes = newValue
+        }
     }
 
 
+    //MARK: Lifetime
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationItem.leftBarButtonItem = editButtonItem()
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -36,6 +52,15 @@ class SavedMemeCollectionViewController: UICollectionViewController {
         updateCellFrame(collectionView!.frame.size)
     }
     
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "CollectionToDetail" {
+            let detailViewController = segue.destinationViewController as! MemeDetailViewController
+            detailViewController.memedImage = sender as? UIImage
+        }
+    }
+    
+    //MARK: UI Layout
     private func updateCellFrame(forViewSize: CGSize) {
         let width = (forViewSize.width - 8) / 3.0
         let layout = collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
@@ -43,11 +68,9 @@ class SavedMemeCollectionViewController: UICollectionViewController {
         layout.itemSize = CGSize(width: width, height: width)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "CollectionToDetail" {
-            let detailViewController = segue.destinationViewController as! MemeDetailViewController
-            detailViewController.memedImage = sender as? UIImage
-        }
+    //MARK: Editing
+    override func setEditing(editing: Bool, animated: Bool) {
+        editingCells = true
     }
 }
 
