@@ -280,11 +280,7 @@
                             <outlet property="delegate" destination="5lV-90-Is7" id="9VG-xl-rao"/>
                         </connections>
                     </tableView>
-                    <toolbarItems>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="aEi-7W-lTU"/>
-                        <barButtonItem systemItem="trash" id="rjo-8P-fDs"/>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="grJ-CW-VTg"/>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Saved Memes" id="fOz-uE-boe">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="IOt-QJ-EIT">
                             <connections>
@@ -386,7 +382,7 @@
         <image name="table_icon" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5fo-tZ-wgw"/>
-        <segue reference="Nfi-gV-OP0"/>
+        <segue reference="Ih9-vH-X7M"/>
+        <segue reference="mOC-4H-c85"/>
     </inferredMetricsTieBreakers>
 </document>
