@@ -15,18 +15,6 @@ class SavedMemeCollectionViewController: UIViewController {
     var savedMemes: [Meme]!
 
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -68,10 +56,6 @@ class SavedMemeCollectionViewController: UIViewController {
 //MARK: Protocol conformance
 extension SavedMemeCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate
 {
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return savedMemes.count
     }
@@ -80,11 +64,7 @@ extension SavedMemeCollectionViewController: UICollectionViewDataSource, UIColle
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SavedMemeCollectionViewCell", forIndexPath: indexPath) as! SavedMemeCollectionViewCell
         
         let meme = savedMemes[indexPath.row]
-        //cell.myImageView.image = meme.memedImage
-        //cell.topLabel.text = meme.topText
-        //cell.bottomLabel.text = meme.bottomText
-        //cell.backgroundView = UIImageView(image: meme.originalImage)
-    
+        
         cell.meme = meme
         return cell
     }

@@ -14,23 +14,14 @@ class SavedMemeTableViewController: UIViewController {
     
     var savedMemes: [Meme]!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
         savedMemes = appDelegate.savedMemes
+        
+        tableView.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -38,9 +29,6 @@ class SavedMemeTableViewController: UIViewController {
         
         if savedMemes.count == 0 {
             self.tabBarController!.performSegueWithIdentifier("SegueToMemeEditor", sender: self)
-        }
-        else {
-            tableView.reloadData()
         }
     }
     
