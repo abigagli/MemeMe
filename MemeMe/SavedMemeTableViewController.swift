@@ -8,9 +8,9 @@
 
 import UIKit
 
-class SavedMemeTableViewController: UIViewController {
+class SavedMemeTableViewController: UITableViewController {
     
-    @IBOutlet weak var tableView: UITableView!
+    //@IBOutlet weak var tableView: UITableView!
     
     var savedMemes: [Meme]! {
         
@@ -23,6 +23,14 @@ class SavedMemeTableViewController: UIViewController {
         super.viewWillAppear(animated)
         
         tableView.reloadData()
+        
+        /*
+        tabBarController!.tabBar.frame = CGRectZero
+        tabBarController!.tabBar.hidden = true
+        navigationController!.toolbarHidden = false
+        
+        self.navigationItem.title = "HIDING TAB TOOLBAR"
+        */
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -44,11 +52,11 @@ class SavedMemeTableViewController: UIViewController {
 //MARK: Protocol conformance
 extension SavedMemeTableViewController : UITableViewDataSource, UITableViewDelegate
 {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return savedMemes.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SavedMemeTableViewCell") as! SavedMemeTableViewCell
         let meme = savedMemes[indexPath.row]
         
@@ -57,7 +65,7 @@ extension SavedMemeTableViewController : UITableViewDataSource, UITableViewDeleg
     }
     
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let memedImage = savedMemes[indexPath.row].memedImage
         
         //Hijack the sender argument to let prepareSegue access the memedImage without 
