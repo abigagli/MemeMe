@@ -87,7 +87,7 @@ class SavedMemeCollectionViewController: UICollectionViewController {
 
             let nextController = UIAlertController(title: "Saved Memes", message: "No saved Memes, please create one", preferredStyle: .Alert)
             
-            let okAction = UIAlertAction(title:"Ok, let me create one", style: .Default) {_ in self.performSegueWithIdentifier("TableViewToMemeEditor", sender: self)}
+            let okAction = UIAlertAction(title:"Ok, let me create one", style: .Default) {_ in self.performSegueWithIdentifier("CollectionViewToMemeEditor", sender: self)}
             nextController.addAction(okAction)
             presentViewController(nextController, animated: true, completion: nil)
         }
