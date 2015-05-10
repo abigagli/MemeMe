@@ -10,8 +10,10 @@ import UIKit
 
 class SavedMemeTableViewController: UITableViewController {
     
-    //MARK:State
+    //MARK: Outlets
+    @IBOutlet weak var addButton: UIBarButtonItem!
     
+    //MARK:State
     //A computed property that simply relates to the actual storage in AppDelegate
     var savedMemes: [Meme]! {
         get {
@@ -25,6 +27,8 @@ class SavedMemeTableViewController: UITableViewController {
             appDelegate.savedMemes = newValue
         }
     }
+    
+    private var tabBarToolbarHeight: CGFloat = CGFloat(0)
 
     //MARK: Lifetime
     override func viewDidLoad() {
@@ -36,19 +40,13 @@ class SavedMemeTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         tableView.reloadData()
-        
-        /*
-        tabBarController!.tabBar.frame = CGRectZero
-        tabBarController!.tabBar.hidden = true
-        navigationController!.toolbarHidden = false
-        
-        self.navigationItem.title = "HIDING TAB TOOLBAR"
-        */
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        tabBarToolbarHeight = tabBarController!.tabBar.frame.size.height
+
         if savedMemes.count == 0 {
             performSegueWithIdentifier("TableViewToMemeEditor", sender: self)
         }
@@ -59,6 +57,29 @@ class SavedMemeTableViewController: UITableViewController {
             let detailViewController = segue.destinationViewController as! MemeDetailViewController
             detailViewController.memedImage = sender as? UIImage
         }
+    }
+    
+    //MARK: Editing
+    override func setEditing(editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        addButton.enabled = !editing
+        
+        if editing {
+            hideTabBarToolbar()
+        }
+        else {
+            showTabBarToolbar()
+        }
+    }
+    
+    private func hideTabBarToolbar() {
+        tabBarController!.tabBar.hidden = true
+        tabBarController!.tabBar.frame.size.height = CGFloat(0.0)
+    }
+    
+    private func showTabBarToolbar() {
+        tabBarController!.tabBar.frame.size.height = self.tabBarToolbarHeight
+        tabBarController!.tabBar.hidden = false
     }
 }
 

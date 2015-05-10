@@ -10,9 +10,10 @@ import UIKit
 
 class SavedMemeCollectionViewController: UICollectionViewController {
     
-    //MARK: State
-    var editingCells = false
+    //MARK: Outlets
+    @IBOutlet weak var addButton: UIBarButtonItem!
     
+    //MARK: State
     //A computed property that simply relates to the actual storage in AppDelegate
     var savedMemes: [Meme]! {
         get {
@@ -27,6 +28,7 @@ class SavedMemeCollectionViewController: UICollectionViewController {
         }
     }
 
+    private var tabBarToolbarHeight: CGFloat = CGFloat(0)
 
     //MARK: Lifetime
     override func viewDidLoad() {
@@ -42,6 +44,8 @@ class SavedMemeCollectionViewController: UICollectionViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        tabBarToolbarHeight = tabBarController!.tabBar.frame.size.height
         
         if savedMemes.count == 0 {
             performSegueWithIdentifier("CollectionViewToMemeEditor", sender: self)
@@ -60,6 +64,35 @@ class SavedMemeCollectionViewController: UICollectionViewController {
         }
     }
     
+    //MARK: Actions
+    
+    @IBAction func deleteSelectedCells(sender: UIBarButtonItem) {
+        let selectedCellIndexPaths = collectionView!.indexPathsForSelectedItems() as! [NSIndexPath]
+        
+        var newSavedMemes: [Meme] = []
+        
+        for (index, meme) in enumerate(savedMemes) {
+            if !contains(selectedCellIndexPaths, { $0.row == index }) {
+                newSavedMemes.append(meme)
+            }
+        }
+        
+        savedMemes = newSavedMemes
+        
+        collectionView!.deleteItemsAtIndexPaths(selectedCellIndexPaths)
+        
+        if savedMemes.count == 0 {
+            navigationController!.setToolbarHidden(true, animated: true)
+            setEditing(false, animated: true)
+
+            let nextController = UIAlertController(title: "Saved Memes", message: "No saved Memes, please create one", preferredStyle: .Alert)
+            
+            let okAction = UIAlertAction(title:"Ok, let me create one", style: .Default) {_ in self.performSegueWithIdentifier("TableViewToMemeEditor", sender: self)}
+            nextController.addAction(okAction)
+            presentViewController(nextController, animated: true, completion: nil)
+        }
+    }
+    
     //MARK: UI Layout
     private func updateCellFrame(forViewSize: CGSize) {
         let width = (forViewSize.width - 8) / 3.0
@@ -70,7 +103,42 @@ class SavedMemeCollectionViewController: UICollectionViewController {
     
     //MARK: Editing
     override func setEditing(editing: Bool, animated: Bool) {
-        editingCells = true
+        super.setEditing(editing, animated: animated)
+        addButton.enabled = !editing
+        
+        collectionView!.allowsMultipleSelection = editing
+        let visibleCellIndexPaths = collectionView!.indexPathsForVisibleItems() as! [NSIndexPath]
+        
+        for indexPath in visibleCellIndexPaths {
+            collectionView!.deselectItemAtIndexPath(indexPath, animated: false)
+            
+            let cell = collectionView!.cellForItemAtIndexPath(indexPath) as! SavedMemeCollectionViewCell
+            
+            cell.editing = editing
+        }
+        
+        if editing {
+            //Hide all toolbars when beginning editing
+            hideTabBarToolbar()
+            navigationController!.toolbarHidden = true
+        }
+        else {
+            //Replace navigation toolbar with the tabbar's one
+            navigationController!.setToolbarHidden(true, animated: true)
+            showTabBarToolbar()
+        }
+        
+    }
+    
+    
+    private func hideTabBarToolbar() {
+        tabBarController!.tabBar.hidden = true
+        tabBarController!.tabBar.frame.size.height = CGFloat(0.0)
+    }
+    
+    private func showTabBarToolbar() {
+        tabBarController!.tabBar.frame.size.height = self.tabBarToolbarHeight
+        tabBarController!.tabBar.hidden = false
     }
 }
 
@@ -87,14 +155,28 @@ extension SavedMemeCollectionViewController: UICollectionViewDataSource, UIColle
         let meme = savedMemes[indexPath.row]
         
         cell.meme = meme
+        cell.editing = editing
         return cell
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let memedImage = savedMemes[indexPath.row].memedImage
         
-        //Hijack the sender argument to let prepareSegue access the memedImage without 
-        //having to add a property just for that...
-        performSegueWithIdentifier("CollectionToDetail", sender: memedImage)
+        if !editing {
+            //Hijack the sender argument to let prepareSegue access the memedImage without
+            //having to add a property just for that...
+            performSegueWithIdentifier("CollectionToDetail", sender: memedImage)
+        }
+        else {
+            navigationController!.setToolbarHidden(false, animated: true)
+        }
+    }
+    
+    override func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        if editing {
+            if collectionView.indexPathsForSelectedItems().count == 0 {
+                navigationController!.setToolbarHidden(true, animated: true)
+            }
+        }
     }
 }

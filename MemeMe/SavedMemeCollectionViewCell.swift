@@ -11,6 +11,7 @@ import UIKit
 class SavedMemeCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var bottomLabel: UILabel!
+    @IBOutlet weak var selectionImage: UIImageView!
     
     var meme: Meme? {
         didSet {
@@ -39,6 +40,21 @@ class SavedMemeCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    var editing = false {
+        didSet {
+            topLabel.hidden = editing
+            bottomLabel.hidden = editing
+            selectionImage.hidden = !editing
+        }
+    }
+    
+    override var selected: Bool {
+        didSet {
+            if editing {
+                selectionImage.image = UIImage(named: selected ? "cell_checked" : "cell_unchecked")
+            }
+        }
+    }
     //Ensure gradient keeps in sync everytime cell layout changes
     override func layoutSubviews() {
         super.layoutSubviews()

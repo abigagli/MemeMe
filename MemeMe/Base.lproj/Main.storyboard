@@ -159,19 +159,35 @@
                                             <nil key="highlightedColor"/>
                                             <size key="shadowOffset" width="-1" height="1"/>
                                         </label>
+                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_unchecked" translatesAutoresizingMaskIntoConstraints="NO" id="cgh-to-FdJ">
+                                            <rect key="frame" x="39" y="74" width="22" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="22" id="sSR-8l-JLG"/>
+                                                <constraint firstAttribute="height" constant="22" id="sdj-kw-sSP"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="cgh-to-FdJ" secondAttribute="centerX" id="2d0-mN-VQx"/>
                                     <constraint firstItem="Jhg-s4-qZn" firstAttribute="leading" secondItem="pUg-0J-NRL" secondAttribute="leading" id="7D0-kd-pUU"/>
                                     <constraint firstItem="j51-ZU-k8z" firstAttribute="leading" secondItem="Jhg-s4-qZn" secondAttribute="leading" id="Gxe-t3-HGY"/>
+                                    <constraint firstAttribute="bottom" secondItem="cgh-to-FdJ" secondAttribute="bottom" constant="2" id="Njl-ZB-GSo"/>
                                     <constraint firstAttribute="trailing" secondItem="Jhg-s4-qZn" secondAttribute="trailing" id="RZo-AP-w8E"/>
                                     <constraint firstItem="Jhg-s4-qZn" firstAttribute="top" secondItem="pUg-0J-NRL" secondAttribute="top" constant="2" id="Vzh-Rt-UJu"/>
+                                    <constraint firstAttribute="bottom" secondItem="cgh-to-FdJ" secondAttribute="bottom" constant="4" id="apZ-82-o8v"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="j51-ZU-k8z" secondAttribute="bottom" constant="2" id="elv-Mw-Tdb"/>
                                     <constraint firstItem="j51-ZU-k8z" firstAttribute="trailing" secondItem="Jhg-s4-qZn" secondAttribute="trailing" id="hMi-wW-oXc"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Njl-ZB-GSo"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="bottomLabel" destination="j51-ZU-k8z" id="hN4-S7-o72"/>
+                                    <outlet property="selectionImage" destination="cgh-to-FdJ" id="iAn-ao-bdf"/>
                                     <outlet property="topLabel" destination="Jhg-s4-qZn" id="yTb-Du-M5X"/>
                                 </connections>
                             </collectionViewCell>
@@ -183,7 +199,11 @@
                     </collectionView>
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="GAj-ma-kgJ"/>
-                        <barButtonItem systemItem="trash" id="P5v-G1-pgP"/>
+                        <barButtonItem systemItem="trash" id="P5v-G1-pgP">
+                            <connections>
+                                <action selector="deleteSelectedCells:" destination="yCY-pr-3Fa" id="FyG-6a-1ma"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="VUZ-ex-Pl8"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Saved Memes" id="A2v-ve-BHp">
@@ -195,6 +215,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="addButton" destination="2SU-63-iIV" id="GGq-GH-azI"/>
                         <segue destination="lwe-4a-S8Y" kind="show" identifier="CollectionToDetail" id="Nfi-gV-OP0"/>
                     </connections>
                 </collectionViewController>
@@ -290,6 +311,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="addButton" destination="IOt-QJ-EIT" id="O8c-ct-7YL"/>
                         <segue destination="lwe-4a-S8Y" kind="show" identifier="TableToDetail" id="Ih9-vH-X7M"/>
                     </connections>
                 </tableViewController>
@@ -378,11 +400,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="cell_unchecked" width="22" height="22"/>
         <image name="collection_icon" width="30" height="30"/>
         <image name="table_icon" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ih9-vH-X7M"/>
-        <segue reference="mOC-4H-c85"/>
+        <segue reference="5fo-tZ-wgw"/>
+        <segue reference="Nfi-gV-OP0"/>
     </inferredMetricsTieBreakers>
 </document>
