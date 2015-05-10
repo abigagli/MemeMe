@@ -13,12 +13,22 @@ class SavedMemeTableViewController: UITableViewController {
     //@IBOutlet weak var tableView: UITableView!
     
     var savedMemes: [Meme]! {
-        
-        let object = UIApplication.sharedApplication().delegate
-        let appDelegate = object as! AppDelegate
-        return appDelegate.savedMemes
+        get {
+            let object = UIApplication.sharedApplication().delegate
+            let appDelegate = object as! AppDelegate
+            return appDelegate.savedMemes
+        }
+        set {
+            let object = UIApplication.sharedApplication().delegate
+            let appDelegate = object as! AppDelegate
+            appDelegate.savedMemes = newValue
+        }
     }
 
+    override func viewDidLoad() {
+        navigationItem.leftBarButtonItem = editButtonItem()
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -71,5 +81,22 @@ extension SavedMemeTableViewController : UITableViewDataSource, UITableViewDeleg
         //Hijack the sender argument to let prepareSegue access the memedImage without 
         //having to add a property just for that...
         performSegueWithIdentifier("TableToDetail", sender: memedImage)
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            savedMemes.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            
+            //If no more saved memes left, alert the user that we're gonna bring him to the meme editor
+            if savedMemes.count == 0 {
+                
+                let nextController = UIAlertController(title: "Saved Memes", message: "No saved Memes, please create one", preferredStyle: .Alert)
+                
+                let okAction = UIAlertAction(title:"Ok, let me create one", style: .Default) {_ in self.performSegueWithIdentifier("TableViewToMemeEditor", sender: self)}
+                nextController.addAction(okAction)
+                presentViewController(nextController, animated: true, completion: nil)
+               }
+        }
     }
 }
