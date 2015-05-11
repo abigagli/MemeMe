@@ -66,9 +66,9 @@ class SavedMemeCollectionViewController: UICollectionViewController {
         savedMemes = newSavedMemes
         
         collectionView!.deleteItemsAtIndexPaths(selectedCellIndexPaths)
-        
+        navigationController!.setToolbarHidden(true, animated: true)
+
         if savedMemes.count == 0 {
-            navigationController!.setToolbarHidden(true, animated: true)
             setEditing(false, animated: true)
 
             let nextController = UIAlertController(title: "Saved Memes", message: "No saved Memes, please create one", preferredStyle: .Alert)
