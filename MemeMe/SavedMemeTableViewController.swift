@@ -14,7 +14,7 @@ class SavedMemeTableViewController: UITableViewController {
     @IBOutlet weak var addButton: UIBarButtonItem!
     
     //MARK:State
-    //A computed property that simply relates to the actual storage in AppDelegate
+    //A computed property that simply "proxies" to the actual storage in AppDelegate
     var savedMemes: [Meme]! {
         get {
             let object = UIApplication.sharedApplication().delegate

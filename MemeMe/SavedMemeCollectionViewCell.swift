@@ -17,25 +17,29 @@ class SavedMemeCollectionViewCell: UICollectionViewCell {
         didSet {
             if let newMeme = meme {
                 backgroundView = UIImageView(image: newMeme.originalImage)
+
+                let topGradientFactor = newMeme.topText == "" ? 0.0 : 1.0
+                let bottomGradientFactor = newMeme.bottomText == "" ? 0.0 : 1.0
                 
+                topLabel.text = newMeme.topText
+                bottomLabel.text = newMeme.bottomText
+                
+
                 //Add a vertical gradient that makes top/bottom labels stand out better
                 let gradientLayer = CAGradientLayer()
                 gradientLayer.frame = self.backgroundView!.bounds
                 gradientLayer.name = "topbottom_gradient"
                 gradientLayer.colors = [
-                    cgColorForRed(255.0, green: 255.0, blue: 255.0, alpha:CGFloat(0.8)),
-                    cgColorForRed(255.0, green: 255.0, blue: 255.0, alpha:CGFloat(0.5)),
+                    cgColorForRed(200.0, green: 200.0, blue: 200.0, alpha:CGFloat(0.8 * topGradientFactor)),
+                    cgColorForRed(200.0, green: 200.0, blue: 200.0, alpha:CGFloat(0.5 * topGradientFactor)),
                     cgColorForRed(0.0, green: 0.0, blue: 0.0),
                     cgColorForRed(0.0, green: 0.0, blue: 0.0),
                     cgColorForRed(0.0, green: 0.0, blue: 0.0),
-                    cgColorForRed(200.0, green: 200.0, blue: 200.0, alpha: CGFloat(0.5)),
-                    cgColorForRed(200.0, green: 200.0, blue: 200.0, alpha: CGFloat (0.8))]
+                    cgColorForRed(200.0, green: 200.0, blue: 200.0, alpha: CGFloat(0.5 * bottomGradientFactor)),
+                    cgColorForRed(200.0, green: 200.0, blue: 200.0, alpha: CGFloat (0.8 * bottomGradientFactor))]
                 gradientLayer.startPoint = CGPoint(x: 0, y: 0)
                 gradientLayer.endPoint = CGPoint(x: 0, y: 1)
                 backgroundView!.layer.addSublayer(gradientLayer)
-
-                topLabel.text = newMeme.topText
-                bottomLabel.text = newMeme.bottomText
             }
         }
     }

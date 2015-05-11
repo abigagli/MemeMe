@@ -8,7 +8,7 @@
 
 import UIKit
 
-//Overrid property observer for UIImageView to make it easy keeping UI (sharing button in particular) in sync
+//Override property observer for UIImageView to make it easy keeping UI (sharing button in particular) in sync
 protocol ObservableUIImageViewDelegate
 {
     func imageDidSet(image: UIImage?)
@@ -39,6 +39,20 @@ class MemeEditorViewController: UIViewController {
         case bottom
     }
     
+    //A computed property that simply "proxies" to the actual storage in AppDelegate
+    var savedMemes: [Meme]! {
+        get {
+            let object = UIApplication.sharedApplication().delegate
+            let appDelegate = object as! AppDelegate
+            return appDelegate.savedMemes
+        }
+        set {
+            let object = UIApplication.sharedApplication().delegate
+            let appDelegate = object as! AppDelegate
+            appDelegate.savedMemes = newValue
+        }
+    }
+
     private var fieldBeingEdited: WhichField = .none
     private var memedImage: UIImage?
     private var previousTopText: String?
@@ -89,11 +103,11 @@ class MemeEditorViewController: UIViewController {
         else { //Otherwise alert the user depending on if we have already saved memes and/or we've an image being currently edited
             let nextController = UIAlertController(title: "MemeEditor", message: "I'd really like to see a meme", preferredStyle: .Alert)
             
-            if numSavedMemes() > 0 {
+            if savedMemes.count > 0 {
                 if imageView.image != nil { //We have saved memes, but we're currently editing one, so ask for confirmation
-                    nextController.message = "Do you really want to go back to saved memes?"
-                    let okAction = UIAlertAction(title:"Yes, show my saved memes", style: .Default) {action in self.dismissViewControllerAnimated(true, completion: nil)}
-                    let cancelAction = UIAlertAction(title:"No, I want to keep editing this one", style: .Default, handler: nil)
+                    nextController.message = "Do you really want to discard changes?"
+                    let okAction = UIAlertAction(title:"Yes, get me back to saved memes", style: .Destructive) {action in self.dismissViewControllerAnimated(true, completion: nil)}
+                    let cancelAction = UIAlertAction(title:"No, I want to keep editing this one", style: .Cancel, handler: nil)
                     nextController.addAction(okAction)
                     nextController.addAction(cancelAction)
                 }
@@ -109,7 +123,7 @@ class MemeEditorViewController: UIViewController {
                 
                 //But if there's an image already set, allow the user to keep editing it
                 if imageView.image != nil {
-                    let keepEditing = UIAlertAction(title:"Keep editing current meme", style: .Default, handler: nil)
+                    let keepEditing = UIAlertAction(title:"Keep editing current meme", style: .Cancel, handler: nil)
                     nextController.addAction(keepEditing)
                     
                 }
@@ -222,9 +236,6 @@ class MemeEditorViewController: UIViewController {
         updateUI()
     }
     
-    private func numSavedMemes() -> Int {
-        return (UIApplication.sharedApplication().delegate as! AppDelegate).savedMemes.count
-    }
     
     private func saveMemedImage() {
         //If the user didn't write any specific text, avoid storing default text labels
@@ -233,7 +244,7 @@ class MemeEditorViewController: UIViewController {
         
         var meme = Meme(topText: topText, bottomText: bottomText, originalImage: imageView.image!, memedImage: self.memedImage!)
         
-        (UIApplication.sharedApplication().delegate as! AppDelegate).savedMemes.append(meme)
+        savedMemes.append(meme)
     }
     
     private func memeizeImage(image: UIImage) -> UIImage {
