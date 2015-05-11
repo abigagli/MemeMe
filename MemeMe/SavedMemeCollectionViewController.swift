@@ -103,29 +103,23 @@ class SavedMemeCollectionViewController: UICollectionViewController {
             cell.editing = editing
         }
         
+        struct Holder {
+            static var originalHeight: CGFloat?
+        }
+
         if editing {
             //Hide all toolbars when beginning editing
-            hideTabBarToolbar()
+            Holder.originalHeight = tabBarController!.hideToolbar()
             navigationController!.toolbarHidden = true
         }
         else {
             //Replace navigation toolbar with the tabbar's one
             navigationController!.setToolbarHidden(true, animated: true)
-            showTabBarToolbar()
+            tabBarController!.showToolbar(Holder.originalHeight!)
         }
         
     }
     
-    
-    private func hideTabBarToolbar() {
-        tabBarController!.tabBar.hidden = true
-        tabBarController!.tabBar.frame.size.height = CGFloat(0.0)
-    }
-    
-    private func showTabBarToolbar() {
-        tabBarController!.tabBar.frame.size.height = self.tabBarToolbarHeight
-        tabBarController!.tabBar.hidden = false
-    }
 }
 
 //MARK: Protocol conformance

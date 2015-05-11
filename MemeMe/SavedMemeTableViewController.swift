@@ -13,9 +13,6 @@ class SavedMemeTableViewController: UITableViewController {
     //MARK: Outlets
     @IBOutlet weak var addButton: UIBarButtonItem!
     
-    //MARK: State
-    private var tabBarToolbarHeight: CGFloat = CGFloat(0)
-
     //MARK: Lifetime
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +28,6 @@ class SavedMemeTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        tabBarToolbarHeight = tabBarController!.tabBar.frame.size.height
-
         if savedMemes.count == 0 {
             performSegueWithIdentifier("TableViewToMemeEditor", sender: self)
         }
@@ -50,22 +45,16 @@ class SavedMemeTableViewController: UITableViewController {
         super.setEditing(editing, animated: animated)
         addButton.enabled = !editing
         
+        struct Holder {
+            static var originalHeight: CGFloat?
+        }
+        
         if editing {
-            hideTabBarToolbar()
+            Holder.originalHeight = tabBarController!.hideToolbar()
         }
         else {
-            showTabBarToolbar()
+            tabBarController!.showToolbar(Holder.originalHeight!)
         }
-    }
-    
-    private func hideTabBarToolbar() {
-        tabBarController!.tabBar.hidden = true
-        tabBarController!.tabBar.frame.size.height = CGFloat(0.0)
-    }
-    
-    private func showTabBarToolbar() {
-        tabBarController!.tabBar.frame.size.height = self.tabBarToolbarHeight
-        tabBarController!.tabBar.hidden = false
     }
 }
 
@@ -100,7 +89,9 @@ extension SavedMemeTableViewController : UITableViewDataSource, UITableViewDeleg
             
             //If no more saved memes left, alert the user that we're gonna bring him to the meme editor
             if savedMemes.count == 0 {
-                
+                navigationController!.setToolbarHidden(true, animated: true)
+                setEditing(false, animated: true)
+
                 let nextController = UIAlertController(title: "Saved Memes", message: "No saved Memes, please create one", preferredStyle: .Alert)
                 
                 let okAction = UIAlertAction(title:"Ok, let me create one", style: .Default) {_ in self.performSegueWithIdentifier("TableViewToMemeEditor", sender: self)}

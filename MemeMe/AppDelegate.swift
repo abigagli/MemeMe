@@ -60,3 +60,18 @@ extension UIViewController {
         }
     }
 }
+
+extension UITabBarController {
+    func hideToolbar() -> CGFloat {
+        tabBar.hidden = true
+        let originalHeight = tabBar.frame.size.height
+        tabBar.frame.size.height = CGFloat(0.0)
+        
+        return originalHeight
+    }
+    
+    func showToolbar(originalHeight: CGFloat) {
+        tabBar.frame.size.height = originalHeight
+        tabBar.hidden = false
+    }
+}
