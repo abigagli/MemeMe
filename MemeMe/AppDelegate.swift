@@ -45,3 +45,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension UIViewController {
+    //A computed property that simply "proxies" to the actual storage in AppDelegate
+    var savedMemes: [Meme]! {
+        get {
+            let object = UIApplication.sharedApplication().delegate
+            let appDelegate = object as! AppDelegate
+            return appDelegate.savedMemes
+        }
+        set {
+            let object = UIApplication.sharedApplication().delegate
+            let appDelegate = object as! AppDelegate
+            appDelegate.savedMemes = newValue
+        }
+    }
+}

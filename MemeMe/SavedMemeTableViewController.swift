@@ -13,21 +13,7 @@ class SavedMemeTableViewController: UITableViewController {
     //MARK: Outlets
     @IBOutlet weak var addButton: UIBarButtonItem!
     
-    //MARK:State
-    //A computed property that simply "proxies" to the actual storage in AppDelegate
-    var savedMemes: [Meme]! {
-        get {
-            let object = UIApplication.sharedApplication().delegate
-            let appDelegate = object as! AppDelegate
-            return appDelegate.savedMemes
-        }
-        set {
-            let object = UIApplication.sharedApplication().delegate
-            let appDelegate = object as! AppDelegate
-            appDelegate.savedMemes = newValue
-        }
-    }
-    
+    //MARK: State
     private var tabBarToolbarHeight: CGFloat = CGFloat(0)
 
     //MARK: Lifetime
@@ -124,3 +110,4 @@ extension SavedMemeTableViewController : UITableViewDataSource, UITableViewDeleg
         }
     }
 }
+
