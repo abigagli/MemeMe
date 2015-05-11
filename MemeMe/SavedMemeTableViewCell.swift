@@ -18,6 +18,8 @@ class SavedMemeTableViewCell: UITableViewCell {
         didSet {
             if let meme = meme {
                 cellImageView.image = meme.memedImage
+                cellImageView.layer.borderColor = UIColor.lightGrayColor().CGColor
+                cellImageView.layer.borderWidth = CGFloat(1.0)
                 topLabel.text = meme.topText
                 bottomLabel.text = meme.bottomText
             }

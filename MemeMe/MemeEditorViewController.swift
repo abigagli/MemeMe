@@ -75,8 +75,14 @@ class MemeEditorViewController: UIViewController {
         
     }
     @IBAction func shareMeme(sender: UIBarButtonItem) {
-        memedImage = memeizeImage(imageView.image!)
+        //Not sure if it's better to render removing the editor's imageview background color or not..
+        //For now I'll leave it there...
         
+        //let backColor = imageView.backgroundColor
+        //imageView.backgroundColor = UIColor.clearColor()
+        memedImage = memeizeImage(imageView.image!)
+        //imageView.backgroundColor = backColor
+
         let activityViewController = UIActivityViewController(activityItems: [memedImage!], applicationActivities: nil)
         activityViewController.completionWithItemsHandler = activityCompletedHandler
         presentViewController(activityViewController, animated: true, completion: nil)
