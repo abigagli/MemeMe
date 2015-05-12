@@ -72,11 +72,13 @@ extension SavedMemeTableViewController : UITableViewDataSource, UITableViewDeleg
     
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let memedImage = savedMemes[indexPath.row].memedImage
-        
-        //Hijack the sender argument to let prepareSegue access the memedImage without 
-        //having to add a property just for that...
-        performSegueWithIdentifier("TableToDetail", sender: memedImage)
+        if !editing {
+            let memedImage = savedMemes[indexPath.row].memedImage
+            
+            //Hijack the sender argument to let prepareSegue access the memedImage without
+            //having to add a property just for that...
+            performSegueWithIdentifier("TableToDetail", sender: memedImage)
+        }
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
