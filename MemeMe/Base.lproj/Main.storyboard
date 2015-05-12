@@ -341,7 +341,7 @@
         <!--Meme Detail-->
         <scene sceneID="2sg-43-7ha">
             <objects>
-                <viewController storyboardIdentifier="MemeDetailViewController" title="Meme Detail" id="lwe-4a-S8Y" customClass="MemeDetailViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MemeDetailViewController" title="Meme Detail" hidesBottomBarWhenPushed="YES" id="lwe-4a-S8Y" customClass="MemeDetailViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Y2R-PN-ZJx"/>
                         <viewControllerLayoutGuide type="bottom" id="xcX-N4-YAn"/>
@@ -352,31 +352,30 @@
                         <subviews>
                             <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aSG-cz-A1s">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="GyY-px-fwq" appends="YES" id="5s4-IM-yhh"/>
+                                </connections>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="xcX-N4-YAn" firstAttribute="top" secondItem="aSG-cz-A1s" secondAttribute="bottom" id="76D-sx-O4e"/>
                             <constraint firstItem="aSG-cz-A1s" firstAttribute="leading" secondItem="ndT-et-lOQ" secondAttribute="leading" id="OQJ-cy-V4p"/>
                             <constraint firstItem="aSG-cz-A1s" firstAttribute="top" secondItem="ndT-et-lOQ" secondAttribute="top" id="PFZ-ky-DgQ"/>
-                            <constraint firstItem="aSG-cz-A1s" firstAttribute="top" secondItem="Y2R-PN-ZJx" secondAttribute="bottom" id="R1B-D5-aKv"/>
                             <constraint firstAttribute="bottom" secondItem="aSG-cz-A1s" secondAttribute="bottom" id="kMd-0Z-bXk"/>
                             <constraint firstAttribute="trailing" secondItem="aSG-cz-A1s" secondAttribute="trailing" id="w7F-lO-LYH"/>
-                            <constraint firstItem="aSG-cz-A1s" firstAttribute="top" secondItem="ndT-et-lOQ" secondAttribute="top" id="yqN-20-lgQ"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="R1B-D5-aKv"/>
-                                <exclude reference="yqN-20-lgQ"/>
-                                <exclude reference="76D-sx-O4e"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="aSG-cz-A1s" id="jCA-5Y-Po4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UjS-Ox-Vr9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="GyY-px-fwq">
+                    <connections>
+                        <action selector="imageViewTapped:" destination="lwe-4a-S8Y" id="aoM-6k-1Ib"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3820" y="1368"/>
         </scene>
@@ -405,7 +404,7 @@
         <image name="table_icon" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ih9-vH-X7M"/>
-        <segue reference="mOC-4H-c85"/>
+        <segue reference="Nfi-gV-OP0"/>
+        <segue reference="5fo-tZ-wgw"/>
     </inferredMetricsTieBreakers>
 </document>

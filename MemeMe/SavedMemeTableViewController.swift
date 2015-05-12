@@ -45,15 +45,12 @@ class SavedMemeTableViewController: UITableViewController {
         super.setEditing(editing, animated: animated)
         addButton.enabled = !editing
         
-        struct Holder {
-            static var originalHeight: CGFloat?
-        }
         
         if editing {
-            Holder.originalHeight = tabBarController!.hideToolbar()
+            tabBarController!.setToolbarHidden(true, animated: true)
         }
         else {
-            tabBarController!.showToolbar(Holder.originalHeight!)
+            tabBarController!.setToolbarHidden(false, animated: true)
         }
     }
 }

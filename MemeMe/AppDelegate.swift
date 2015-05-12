@@ -62,16 +62,86 @@ extension UIViewController {
 }
 
 extension UITabBarController {
-    func hideToolbar() -> CGFloat {
-        tabBar.hidden = true
-        let originalHeight = tabBar.frame.size.height
-        tabBar.frame.size.height = CGFloat(0.0)
+    
+    //This is more complex that I hoped because of a quirk I wasn't able to solve in an easier way..
+    //In practice, the idea was simply to "offset" away the tabbarcontroller toolbar to hide it,
+    //and it works by itself, but then when showing the navigationcontroller toolbar (with the trash item in it)
+    //it seems to "remember" where the tabbarcontroller toolbar was and it gets drawn above its original (i.e.
+    //before offsetting it away) position (If you want to see what I mean, rename the setToolbarHidenSimpler below and use that).
+    //So I went further and set the height to zero to let the navigationcontroller sit flush at the bottom.
+    //But then I found out that the UITabBarItem images (the icon for table and grid) remained somehow in the way
+    //although partially clipped.
+    //I wasn't able to find any better way other then nilling them out before ofsetting the toolbar and then 
+    //restoring them.
+    //I'd really be curious to understand why is that!
+    
+    func setToolbarHidden (hidden: Bool, animated: Bool, completion userCompletion: (() -> Void)? = nil) {
         
-        return originalHeight
+        //We need some "permanent" state to be able to restore original height and UITabBarItem images
+        struct Holder {
+            static var height = CGFloat(0.0)
+            static var images = [UIImage?]()
+        }
+        
+        //If we're already in the desired state, NOP
+        if toolbarIsVisible() == !hidden {
+            return
+        }
+        
+        if (hidden) {//When hiding, store height and UITabBarItem images to be restored when showing again
+            Holder.height = tabBar.frame.size.height
+            for item in tabBar.items! {
+                Holder.images.append((item as! UITabBarItem).image)
+                (item as! UITabBarItem).image = nil
+            }
+        }
+        else { //Restore original height and UITabBarItem images
+            tabBar.frame.size.height = Holder.height
+            for (index, image) in enumerate(Holder.images) {
+                (tabBar.items![index] as! UITabBarItem).image = image
+            }
+            Holder.images = [UIImage?]()
+        }
+        
+        let frame = tabBar.frame
+        let offsetY = hidden ? frame.size.height : -frame.size.height
+        
+        UIView.animateWithDuration(animated ? 0.3 : 0.0
+            , animations: {
+                self.tabBar.frame = CGRectOffset(frame, CGFloat(0.0), offsetY)
+            }
+            , completion: {_ in
+                if hidden {
+                    self.tabBar.frame.size.height = CGFloat(0.0)
+                }
+                userCompletion?()
+        })
     }
     
-    func showToolbar(originalHeight: CGFloat) {
-        tabBar.frame.size.height = originalHeight
-        tabBar.hidden = false
+    /******** MUCH SIMPLER AND CLEANER IMPLEMENTATION BUT SEE COMMENTS ABOVE *********/
+    func setToolbarHidden_simpler (hidden: Bool, animated: Bool, completion userCompletion: (() -> Void)? = nil) {
+        
+        
+        //If we're already in the desired state, NOP
+        if toolbarIsVisible() == !hidden {
+            return
+        }
+        
+        let frame = tabBar.frame
+        let offsetY = hidden ? frame.size.height : -frame.size.height
+        
+        UIView.animateWithDuration(animated ? 0.3 : 0.0
+            , animations: {
+                self.tabBar.frame = CGRectOffset(frame, CGFloat(0.0), offsetY)
+            }
+            , completion: {_ in
+                userCompletion?()
+        })
+        
+    }
+    /*********************************************************************************/
+
+    private func toolbarIsVisible() -> Bool {
+        return tabBar.frame.origin.y < CGRectGetMaxY(view.frame)
     }
 }

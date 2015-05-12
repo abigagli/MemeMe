@@ -20,6 +20,7 @@ class SavedMemeCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -103,19 +104,15 @@ class SavedMemeCollectionViewController: UICollectionViewController {
             cell.editing = editing
         }
         
-        struct Holder {
-            static var originalHeight: CGFloat?
-        }
-
         if editing {
             //Hide all toolbars when beginning editing
-            Holder.originalHeight = tabBarController!.hideToolbar()
-            navigationController!.toolbarHidden = true
+            tabBarController!.setToolbarHidden(true, animated: true)
+            navigationController!.setToolbarHidden(true, animated: false)
         }
         else {
             //Replace navigation toolbar with the tabbar's one
-            navigationController!.setToolbarHidden(true, animated: true)
-            tabBarController!.showToolbar(Holder.originalHeight!)
+            navigationController!.setToolbarHidden(true, animated: false)
+            tabBarController!.setToolbarHidden(false, animated: true)
         }
         
     }
