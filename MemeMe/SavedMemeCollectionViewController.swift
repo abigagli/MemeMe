@@ -58,8 +58,8 @@ class SavedMemeCollectionViewController: UICollectionViewController {
         
         var newSavedMemes: [Meme] = []
         
-        for (index, meme) in enumerate(savedMemes) {
-            if !contains(selectedCellIndexPaths, { $0.row == index }) {
+        for (index, meme) in savedMemes.enumerate() {
+            if !selectedCellIndexPaths.contains({ $0.row == index }) {
                 newSavedMemes.append(meme)
             }
         }
@@ -94,7 +94,7 @@ class SavedMemeCollectionViewController: UICollectionViewController {
         addButton.enabled = !editing
         
         collectionView!.allowsMultipleSelection = editing
-        let visibleCellIndexPaths = collectionView!.indexPathsForVisibleItems() as! [NSIndexPath]
+        let visibleCellIndexPaths = collectionView!.indexPathsForVisibleItems() 
         
         for indexPath in visibleCellIndexPaths {
             collectionView!.deselectItemAtIndexPath(indexPath, animated: false)

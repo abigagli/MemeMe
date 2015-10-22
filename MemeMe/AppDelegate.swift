@@ -91,14 +91,14 @@ extension UITabBarController {
         if (hidden) {//When hiding, store height and UITabBarItem images to be restored when showing again
             Holder.height = tabBar.frame.size.height
             for item in tabBar.items! {
-                Holder.images.append((item as! UITabBarItem).image)
-                (item as! UITabBarItem).image = nil
+                Holder.images.append((item ).image)
+                (item ).image = nil
             }
         }
         else { //Restore original height and UITabBarItem images
             tabBar.frame.size.height = Holder.height
-            for (index, image) in enumerate(Holder.images) {
-                (tabBar.items![index] as! UITabBarItem).image = image
+            for (index, image) in Holder.images.enumerate() {
+                (tabBar.items![index] ).image = image
             }
             Holder.images = [UIImage?]()
         }

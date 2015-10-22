@@ -56,7 +56,7 @@ class MemeEditorViewController: UIViewController {
     
     //MARK: Actions
     @IBAction func chooseImage(sender: UIBarButtonItem) {
-        var pickerViewController = UIImagePickerController()
+        let pickerViewController = UIImagePickerController()
         if sender.title != nil {
             pickerViewController.sourceType = .PhotoLibrary
         }
@@ -208,7 +208,7 @@ class MemeEditorViewController: UIViewController {
     }
     
     
-    private func stopTextEditing (#restorePreviousText: Bool) {
+    private func stopTextEditing (restorePreviousText restorePreviousText: Bool) {
         if restorePreviousText {
             topTextField.text = previousTopText
             bottomTextField.text = previousBottomText
