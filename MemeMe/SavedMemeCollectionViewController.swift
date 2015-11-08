@@ -54,7 +54,7 @@ class SavedMemeCollectionViewController: UICollectionViewController {
     //MARK: Actions
     
     @IBAction func deleteSelectedCells(sender: UIBarButtonItem) {
-        let selectedCellIndexPaths = collectionView!.indexPathsForSelectedItems() as! [NSIndexPath]
+        guard let selectedCellIndexPaths = collectionView!.indexPathsForSelectedItems() else {return}
         
         var newSavedMemes: [Meme] = []
         
@@ -120,7 +120,7 @@ class SavedMemeCollectionViewController: UICollectionViewController {
 }
 
 //MARK: Protocol conformance
-extension SavedMemeCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate
+extension SavedMemeCollectionViewController
 {
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return savedMemes.count
@@ -151,7 +151,7 @@ extension SavedMemeCollectionViewController: UICollectionViewDataSource, UIColle
     
     override func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
         if editing {
-            if collectionView.indexPathsForSelectedItems().count == 0 {
+            if collectionView.indexPathsForSelectedItems()!.count == 0 {
                 navigationController!.setToolbarHidden(true, animated: true)
             }
         }

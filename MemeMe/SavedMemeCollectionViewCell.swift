@@ -62,7 +62,7 @@ class SavedMemeCollectionViewCell: UICollectionViewCell {
     //Ensure gradient keeps in sync everytime cell layout changes
     override func layoutSubviews() {
         super.layoutSubviews()
-        for l in backgroundView!.layer.sublayers {
+        for l in backgroundView!.layer.sublayers! {
             (l as? CAGradientLayer)?.frame = backgroundView!.bounds
         }
     }

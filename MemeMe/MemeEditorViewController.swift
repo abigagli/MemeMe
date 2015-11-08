@@ -192,7 +192,7 @@ class MemeEditorViewController: UIViewController {
     }
     
     //MARK: Business logic
-    func activityCompletedHandler (activity: String!,  completed: Bool, returnedItems: [AnyObject]!, activityError: NSError!) -> Void {
+    func activityCompletedHandler (activity: String?,  completed: Bool, returnedItems: [AnyObject]?, activityError: NSError?) -> Void {
         
         if completed && activityError == nil {
             saveMemedImage()
@@ -234,7 +234,7 @@ class MemeEditorViewController: UIViewController {
         let topText = topTextField.text == Defaults.kTopText ? "" : topTextField.text
         let bottomText = bottomTextField.text == Defaults.kBottomText ? "" : bottomTextField.text
         
-        var meme = Meme(topText: topText, bottomText: bottomText, originalImage: imageView.image!, memedImage: self.memedImage!)
+        let meme = Meme(topText: topText!, bottomText: bottomText!, originalImage: imageView.image!, memedImage: self.memedImage!)
         
         savedMemes.append(meme)
     }
@@ -287,7 +287,7 @@ class MemeEditorViewController: UIViewController {
     
     private func ensureDefaultText(forTextField textField: UITextField) {
         
-        if textField.text.isEmpty {
+        if textField.text!.isEmpty {
             if textField == topTextField {
                 textField.text =  Defaults.kTopText
             }

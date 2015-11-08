@@ -56,7 +56,7 @@ class SavedMemeTableViewController: UITableViewController {
 }
 
 //MARK: Protocol conformance
-extension SavedMemeTableViewController : UITableViewDataSource, UITableViewDelegate
+extension SavedMemeTableViewController
 {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return savedMemes.count
